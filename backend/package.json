@@ -24,5 +24,8 @@
     "mongoose-pagination": "^1.0.0",
     "nodemon": "^2.0.3",
     "yarn": "^1.22.4"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
