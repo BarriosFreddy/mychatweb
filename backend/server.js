@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const UserService = require('./services/UserService');
+const cors = require('cors');
 
 const URL_DATABASE = 'mongodb://fbarrios:fbarrios7@ds121176.mlab.com:21176/heroku_vvf1zl9h';
 
@@ -17,12 +18,18 @@ database.on('error', err => {
 	console.error('connection error:', err)
 });
 
+app.use(
+    cors({
+        credentials: true,
+        origin: true
+    })
+);
+app.options('*', cors());
 app.use(bodyParser.json());
 
 app.get('/', (request, response) => {
 	response.send('HI');
 })
-
 app.get('/users', (request, response) => {
 	const user = {
 		name: `User ${Math.random() * 100}`,
