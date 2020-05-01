@@ -1,0 +1,16 @@
+{
+  "name": "mychatweb-backend",
+  "version": "1.0.0",
+  "description": "My Chat Web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "web",
+    "slack"
+  ],
+  "author": "fbarrios",
+  "license": "ISC"
+}
