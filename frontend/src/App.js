@@ -1,33 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { HomeComponent } from './views/HomeComponent/HomeComponent';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import { LoginComponent } from './views/LoginComponent/LoginComponent';
+import { RegisterComponent } from './views/RegisterComponent/RegisterComponent';
 
 export default class App extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      loggedIn: true
+      loggedIn: false
     }
   }
 
   render() {
-    return (<div className="App">
-      {this.state.loggedIn && <HomeComponent></HomeComponent>}
-      {!this.state.loggedIn && <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-      </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-      </a>
-      </header>}
-    </div>)
+    return (
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/register">
+              <RegisterComponent />
+            </Route>
+            <Route path="/">
+              {this.state.loggedIn && <HomeComponent />}
+              {!this.state.loggedIn && <LoginComponent />}
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    )
+
   }
 }
