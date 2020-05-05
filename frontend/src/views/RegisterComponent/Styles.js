@@ -33,8 +33,12 @@ export default {
 		marginVertical: '0px',
 		float: 'left'
 	},
+	recommendations: {
+		fontSize: 11,	
+		float: 'left'
+	},
 	buttonRegister: {
-		marginTop: '50px',
+		marginTop: '80px',
 		fontWeight: 'bold'
 	}
 }

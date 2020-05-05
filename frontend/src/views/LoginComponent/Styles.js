@@ -37,5 +37,9 @@ export default {
 	buttonRegister: {
 		marginTop: '20px',
 		fontWeight: 'bold'
-	}
+	},
+	legend: {
+		marginVertical: '0px',
+		float: 'left'
+	},
 }
