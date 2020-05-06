@@ -14,6 +14,7 @@ const Constants = {
 		GET: 'get',
 		DELETE: 'delete',
 	},
+	USER_TOKEN: 'user-mychatweb-token',
 	RESOURCES: {
 		AUTHENTICATION: '/authentication',
 		USERS: '/users',

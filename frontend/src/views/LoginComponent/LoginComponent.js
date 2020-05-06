@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import AuthenticationService from '../../services/AuthenticationService';
 import history from './../../history';
-
+import Constants from './../../constants/Constants';
 export class LoginComponent extends React.Component {
 	constructor(props) {
 		super()
@@ -31,17 +31,17 @@ export class LoginComponent extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		history.push('/');
-/* 		if (this.validateForm()) {
+		if (this.validateForm()) {
 			this.setState({ disable: true });
 			AuthenticationService.login(this.getUser()).then(user => {
 				if (user) {
+					localStorage.setItem(Constants.USER_TOKEN, JSON.stringify(user.data))
 					this.clearForm()
 					this.setState({ success: true, disable: false });
-
+					history.push("/");
 				}
 			}).catch(error => console.log(error));
-		} */
+		}
 	}
 
 	validateForm() {
@@ -78,10 +78,6 @@ export class LoginComponent extends React.Component {
 					<Form.Group style={Styles.rememberme} controlId="formBasicCheckbox">
 						<Form.Check type="checkbox" label="Remember me" />
 					</Form.Group>
-					{this.state.success &&
-						<Form.Group>
-							<Form.Text style={Styles.legend} >Login successfully</Form.Text>
-						</Form.Group>}
 					<Button style={Styles.buttonLogin} block variant="primary"
 						disabled={this.state.disable}
 						onClick={this.handleSubmit}>

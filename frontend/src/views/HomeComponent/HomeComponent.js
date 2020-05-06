@@ -3,11 +3,11 @@ import Styles from './Styles';
 import { TopBarComponent } from './TopBarComponent/TopBarComponent';
 import { MainComponent } from './MainComponent/MainComponent';
 
-
 export class HomeComponent extends React.Component {
 	constructor(props) {
 		super()
-		this.state = {}
+		this.state = {
+		}
 	}
 
 	render() {
