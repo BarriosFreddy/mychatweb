@@ -1,16 +1,17 @@
 const router = require('express').Router();
-const paths = require('../constants/Paths');
+const Constants = require('../constants/Constants');
 const ConversationService = require('../services/ConversationService');
 
+const { CONVERSATION } = Constants.RESOURCES;
 
-router.post(paths.conversation.save, (request, response) => {
+router.post(CONVERSATION.save, (request, response) => {
 	const { body } = request;
 	ConversationService.save(body)
 		.then(conversation => response.send(conversation))
 		.catch(error => console.error(error));
 });
 
-router.put(paths.conversation.update, (request, response) => {
+router.put(CONVERSATION.update, (request, response) => {
 	const { body } = request;
 	const id = request.params.id;
 
@@ -28,13 +29,13 @@ router.put(paths.conversation.update, (request, response) => {
 	})
 });
 
-router.get(paths.conversation.findAll, (request, response) => {
+router.get(CONVERSATION.findAll, (request, response) => {
 	ConversationService.findAll()
 		.then(conversationList => response.send(conversationList))
 		.catch(error => console.error(error));
 });
 
-router.get(paths.conversation.findById, (request, response) => {
+router.get(CONVERSATION.findById, (request, response) => {
 	const id = request.params.id;
 	ConversationService.findById(id)
 		.then(conversation => response.send(conversation))
@@ -44,7 +45,7 @@ router.get(paths.conversation.findById, (request, response) => {
 		});
 });
 
-router.delete(paths.conversation.delete, (request, response) => {
+router.delete(CONVERSATION.delete, (request, response) => {
 	const id = request.params.id;
 	ConversationService.delete(id)
 		.then(conversation => response.send(conversation))

@@ -1,12 +1,14 @@
 const router = require('express').Router();
 const users = require('./UsersRouter');
 const conversation = require('./ConversationsRouter');
-const PATHS = require('./../constants/Paths');
+const authentication = require('./AuthenticationRouter');
+const Constants = require('./../constants/Constants');
 
-router.use(PATHS.uri.users, users);
-router.use(PATHS.uri.conversations, conversation);
+router.use(Constants.URI.AUTHENTICATION, authentication);
+router.use(Constants.URI.USERS, users);
+router.use(Constants.URI.CONVERSATIONS, conversation);
 
-router.get(PATHS.uri.home, (request, response) => {
+router.get(Constants.URI.HOME, (request, response) => {
 	response.send('My chat web API!');
 })
 

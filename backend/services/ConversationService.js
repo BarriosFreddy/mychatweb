@@ -56,4 +56,4 @@ class ConversationService {
 	}
 }
 
-module.exports = new ConversationService;
+module.exports = new ConversationService();

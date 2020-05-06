@@ -7,7 +7,7 @@ class UserService {
 
 	/**
 	 * 
-	 * @param {*} user 
+	 * @param {Object} user 
 	 */
 	save(user) {
 		const userModel = new User(user);
@@ -16,8 +16,8 @@ class UserService {
 
 	/**
 	 * 
-	 * @param {*} id 
-	 * @param {*} user 
+	 * @param {Number} id 
+	 * @param {Object} user 
 	 */
 	async update(id, user) {
 		const userRetrieved = await User.findOne({ _id: id });
@@ -32,7 +32,7 @@ class UserService {
 
 	/**
 	 * 
-	 * @param {*} filter 
+	 * @param {Object} filter 
 	 */
 	findAll(filter) {
 		if (filter) {
@@ -43,7 +43,7 @@ class UserService {
 
 	/**
 	 * 
-	 * @param {*} id 
+	 * @param {Number} id 
 	 */
 	findById(id) {
 		return User.findById(id);
@@ -51,11 +51,19 @@ class UserService {
 
 	/**
 	 * 
-	 * @param {*} id 
+	 * @param {String} username 
+	 */
+	findByUsername(username) {
+		return User.findOne({ username });
+	}
+
+	/**
+	 * 
+	 * @param {Number} id 
 	 */
 	async delete(id) {
 		return User.findByIdAndDelete(id);
 	}
 }
 
-module.exports = new UserService 
+module.exports = new UserService

@@ -3,7 +3,8 @@ import Styles from './Styles';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import AuthService from '../../services/AuthService';
+import AuthenticationService from '../../services/AuthenticationService';
+import history from './../../history';
 
 export class LoginComponent extends React.Component {
 	constructor(props) {
@@ -30,15 +31,17 @@ export class LoginComponent extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		if (this.validateForm()) {
+		history.push('/');
+/* 		if (this.validateForm()) {
 			this.setState({ disable: true });
-			AuthService.login(this.getUser()).then(user => {
+			AuthenticationService.login(this.getUser()).then(user => {
 				if (user) {
 					this.clearForm()
 					this.setState({ success: true, disable: false });
+
 				}
 			}).catch(error => console.log(error));
-		}
+		} */
 	}
 
 	validateForm() {

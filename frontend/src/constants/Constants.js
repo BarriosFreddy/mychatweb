@@ -14,12 +14,13 @@ const Constants = {
 		GET: 'get',
 		DELETE: 'delete',
 	},
-	URI: {
+	RESOURCES: {
 		AUTHENTICATION: '/authentication',
 		USERS: '/users',
 		CONVERSATIONS: '/conversations'
 	},
-	RESOURCES: {
+	ENDPOINTS: {
+		LOGIN: '/login',
 		USER: {
 			...PATHS_GENERIC
 		},

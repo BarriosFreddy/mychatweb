@@ -1,16 +1,17 @@
 const router = require('express').Router();
-const paths = require('../constants/Paths');
+const Constants = require('../constants/Constants');
 const UserService = require('./../services/UserService');
 
+const { USER } = Constants.RESOURCES;
 
-router.post(paths.user.save, (request, response) => {
+router.post(USER.save, (request, response) => {
 	const { body } = request;
 	UserService.save(body)
 		.then(user => response.send(user))
 		.catch(error => console.error(error));
 });
 
-router.put(paths.user.update, (request, response) => {
+router.put(USER.update, (request, response) => {
 	const { body } = request;
 	const id = request.params.id;
 
@@ -28,13 +29,13 @@ router.put(paths.user.update, (request, response) => {
 	})
 });
 
-router.get(paths.user.findAll, (request, response) => {
+router.get(USER.findAll, (request, response) => {
 	UserService.findAll()
 		.then(userList => response.send(userList))
 		.catch(error => console.error(error));
 });
 
-router.get(paths.user.findById, (request, response) => {
+router.get(USER.findById, (request, response) => {
 	const id = request.params.id;
 	UserService.findById(id)
 		.then(user => response.send(user))
@@ -44,7 +45,7 @@ router.get(paths.user.findById, (request, response) => {
 		});
 });
 
-router.delete(paths.user.delete, (request, response) => {
+router.delete(USER.delete, (request, response) => {
 	const id = request.params.id;
 	UserService.delete(id)
 		.then(user => response.send(user))
