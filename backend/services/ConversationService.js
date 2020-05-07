@@ -47,6 +47,10 @@ class ConversationService {
 		return Conversation.findById(id);
 	}
 
+	findByType(type) {
+		return Conversation.find({ type });
+	}
+
 	/**
 	 * 
 	 * @param {*} id 

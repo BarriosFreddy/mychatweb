@@ -8,7 +8,9 @@ router.post(USER.save, (request, response) => {
 	const { body } = request;
 	UserService.save(body)
 		.then(user => response.send(user))
-		.catch(error => console.error(error));
+		.catch(error => {
+			response.status(400).send(error);
+		});
 });
 
 router.put(USER.update, (request, response) => {
@@ -20,7 +22,7 @@ router.put(USER.update, (request, response) => {
 			UserService.update(id, body)
 				.then(user => response.send(user))
 				.catch(error => {
-					response.sendStatus(500);
+					response.status(500).send(error);
 					console.error(error);
 				});
 		} else {
@@ -32,7 +34,10 @@ router.put(USER.update, (request, response) => {
 router.get(USER.findAll, (request, response) => {
 	UserService.findAll()
 		.then(userList => response.send(userList))
-		.catch(error => console.error(error));
+		.catch(error => {
+			response.status(500).send(error);
+			console.error(error);
+		});
 });
 
 router.get(USER.findById, (request, response) => {
@@ -40,7 +45,7 @@ router.get(USER.findById, (request, response) => {
 	UserService.findById(id)
 		.then(user => response.send(user))
 		.catch(error => {
-			response.sendStatus(500);
+			response.status(500).send(error);
 			console.error(error);
 		});
 });
@@ -50,7 +55,7 @@ router.delete(USER.delete, (request, response) => {
 	UserService.delete(id)
 		.then(user => response.send(user))
 		.catch(error => {
-			response.sendStatus(500);
+			response.status(500).send(error);
 			console.error(error);
 		});
 });

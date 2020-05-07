@@ -36,11 +36,21 @@ router.get(CONVERSATION.findAll, (request, response) => {
 });
 
 router.get(CONVERSATION.findById, (request, response) => {
-	const id = request.params.id;
+	const { id } = request.params;
 	ConversationService.findById(id)
 		.then(conversation => response.send(conversation))
 		.catch(error => {
 			response.sendStatus(500);
+			console.error(error);
+		});
+});
+
+router.get(CONVERSATION.findByType, (request, response) => {
+	const { type } = request.params;
+	ConversationService.findByType(type)
+		.then(conversations => response.send(conversations))
+		.catch(error => {
+			response.status(500).send(error);
 			console.error(error);
 		});
 });

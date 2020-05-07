@@ -12,6 +12,8 @@ router.post(LOGIN, (request, response) => {
 		} else {
 			response.send(null);
 		}
+	}).catch(error => {
+		response.status(400).send(error);
 	});
 
 });

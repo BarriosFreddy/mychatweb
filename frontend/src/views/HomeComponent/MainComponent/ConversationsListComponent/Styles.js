@@ -5,6 +5,9 @@ export default {
 		height: '95vh',
 		width: '20vw',
 		background: '#5c3a58',
-		color: Colors.white
+		color: Colors.white,
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'stretch'
 	}
 }

@@ -21,7 +21,8 @@ module.exports = {
 			...PATHS_GENERIC
 		},
 		CONVERSATION: {
-			...PATHS_GENERIC
+			...PATHS_GENERIC,
+			findByType: '/type/:type'
 		}
 	}
 }

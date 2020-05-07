@@ -4,10 +4,10 @@ const ObjectId = Schema.Types.ObjectId;
 
 const conversationSchema = new Schema({
 	name: { type: String },
-	type: { type: String, enum: ['P', 'G'] },
+	type: { type: String },
 	members: [ObjectId],
 	messages: [{
-		author: {type: ObjectId, ref: 'User' },
+		author: { type: ObjectId, ref: 'User' },
 		message: { type: String },
 		createdAt: { type: Date, default: Date.now }
 	}],

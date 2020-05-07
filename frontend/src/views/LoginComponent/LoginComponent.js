@@ -2,17 +2,19 @@ import React from 'react';
 import Styles from './Styles';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { Link } from 'react-router-dom';
 import AuthenticationService from '../../services/AuthenticationService';
 import history from './../../history';
 import Constants from './../../constants/Constants';
+
 export class LoginComponent extends React.Component {
 	constructor(props) {
 		super()
 		this.state = {
 			username: '',
 			password: '',
-			success: false,
+			loginFailed: false,
 			disable: false
 		};
 
@@ -34,13 +36,18 @@ export class LoginComponent extends React.Component {
 		if (this.validateForm()) {
 			this.setState({ disable: true });
 			AuthenticationService.login(this.getUser()).then(user => {
-				if (user) {
+				if (user && user.data) {
 					localStorage.setItem(Constants.USER_TOKEN, JSON.stringify(user.data))
 					this.clearForm()
-					this.setState({ success: true, disable: false });
+					this.setState({ loginFailed: false, disable: false });
 					history.push("/");
+				} else {
+					this.setState({ loginFailed: true, disable: false });
 				}
-			}).catch(error => console.log(error));
+			}).catch(error => {
+				console.log(error);
+				this.setState({ loginFailed: true, disable: false });
+			});
 		}
 	}
 
@@ -75,9 +82,9 @@ export class LoginComponent extends React.Component {
 							value={this.state.password}
 							onChange={this.handleChangePassword} />
 					</Form.Group>
-					<Form.Group style={Styles.rememberme} controlId="formBasicCheckbox">
-						<Form.Check type="checkbox" label="Remember me" />
-					</Form.Group>
+					{this.state.loginFailed && <Form.Group style={Styles.rememberme} controlId="formBasicCheckbox">
+						<Form.Text>Username or password are incorrect</Form.Text>
+					</Form.Group>}
 					<Button style={Styles.buttonLogin} block variant="primary"
 						disabled={this.state.disable}
 						onClick={this.handleSubmit}>
