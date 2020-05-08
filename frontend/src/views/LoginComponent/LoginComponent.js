@@ -2,7 +2,6 @@ import React from 'react';
 import Styles from './Styles';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
 import { Link } from 'react-router-dom';
 import AuthenticationService from '../../services/AuthenticationService';
 import history from './../../history';
@@ -37,7 +36,8 @@ export class LoginComponent extends React.Component {
 			this.setState({ disable: true });
 			AuthenticationService.login(this.getUser()).then(user => {
 				if (user && user.data) {
-					localStorage.setItem(Constants.USER_TOKEN, JSON.stringify(user.data))
+					localStorage.setItem(Constants.USER_TOKEN, JSON.stringify(user.data._id));
+					localStorage.setItem(Constants.CURRENT_USER, JSON.stringify(user.data));
 					this.clearForm()
 					this.setState({ loginFailed: false, disable: false });
 					history.push("/");

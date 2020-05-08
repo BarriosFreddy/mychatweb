@@ -15,7 +15,8 @@ const Constants = {
 		GET: 'get',
 		DELETE: 'delete',
 	},
-	USER_TOKEN: 'user-mychatweb-token',
+	USER_TOKEN: 'mychatweb-token',
+	CURRENT_USER: 'current-user-mychatweb',
 	RESOURCES: {
 		AUTHENTICATION: '/authentication',
 		USERS: '/users',
@@ -24,7 +25,8 @@ const Constants = {
 	ENDPOINTS: {
 		LOGIN: '/login',
 		USER: {
-			...PATHS_GENERIC
+			...PATHS_GENERIC,
+			findByUsername: '/username/'
 		},
 		CONVERSATION: {
 			...PATHS_GENERIC,

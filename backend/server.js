@@ -1,11 +1,12 @@
 const app = require('express')();
-const database = require('./config/DatabaseConfig')();
+const databaseConfig = require('./config/DatabaseConfig');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const routes = require('./routes/index');
 const Constants = require('./constants/Constants');
 
 
+databaseConfig.init();
 app.use(cors({
 	credentials: true,
 	origin: true

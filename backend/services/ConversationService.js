@@ -5,7 +5,7 @@ class ConversationService {
 
 	/**
 	 * 
-	 * @param {*} conversation 
+	 * @param {Object} conversation 
 	 */
 	save(conversation) {
 		const conversationModel = new Conversation(conversation);
@@ -14,8 +14,8 @@ class ConversationService {
 
 	/**
 	 * 
-	 * @param {*} id 
-	 * @param {*} conversation 
+	 * @param {Number} id 
+	 * @param {Object} conversation 
 	 */
 	async update(id, conversation) {
 		const conversationRetrieved = await Conversation.findOne({ _id: id });
@@ -30,7 +30,7 @@ class ConversationService {
 
 	/**
 	 * 
-	 * @param {*} filter 
+	 * @param {Object} filter
 	 */
 	findAll(filter) {
 		if (filter) {
@@ -41,19 +41,23 @@ class ConversationService {
 
 	/**
 	 * 
-	 * @param {*} id 
+	 * @param {Number} id 
 	 */
 	findById(id) {
 		return Conversation.findById(id);
 	}
 
+	/**
+	 * 
+	 * @param {String} type 
+	 */
 	findByType(type) {
 		return Conversation.find({ type });
 	}
 
 	/**
 	 * 
-	 * @param {*} id 
+	 * @param {Number} id 
 	 */
 	async delete(id) {
 		return Conversation.findByIdAndDelete(id);

@@ -18,7 +18,8 @@ module.exports = {
 	RESOURCES: {
 		LOGIN: '/login',
 		USER: {
-			...PATHS_GENERIC
+			...PATHS_GENERIC,
+			findByUsername: '/username/:username'
 		},
 		CONVERSATION: {
 			...PATHS_GENERIC,

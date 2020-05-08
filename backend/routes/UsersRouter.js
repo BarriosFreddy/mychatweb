@@ -41,9 +41,19 @@ router.get(USER.findAll, (request, response) => {
 });
 
 router.get(USER.findById, (request, response) => {
-	const id = request.params.id;
+	const { id } = request.params;
 	UserService.findById(id)
 		.then(user => response.send(user))
+		.catch(error => {
+			response.status(500).send(error);
+			console.error(error);
+		});
+});
+
+router.get(USER.findByUsername, (request, response) => {
+	const { username } = request.params;
+	UserService.findByUsername(username)
+		.then(userList => response.send(userList))
 		.catch(error => {
 			response.status(500).send(error);
 			console.error(error);

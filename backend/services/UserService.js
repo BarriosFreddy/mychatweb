@@ -1,6 +1,4 @@
 const User = require('./../models/User');
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
 
 class UserService {
 	constructor() { }
@@ -54,7 +52,7 @@ class UserService {
 	 * @param {String} username 
 	 */
 	findByUsername(username) {
-		return User.findOne({ username });
+		return User.find({ username: new RegExp('.*' + username + '.*', "i") });
 	}
 
 	/**
@@ -66,4 +64,4 @@ class UserService {
 	}
 }
 
-module.exports = new UserService
+module.exports = new UserService();

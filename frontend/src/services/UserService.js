@@ -5,20 +5,59 @@ const { USERS } = Constants.RESOURCES;
 const { USER } = Constants.ENDPOINTS;
 class UserService extends Middleware {
 
+	/**
+	 * 
+	 * @param {Object} body 
+	 */
 	save(body) {
-		return super.post(USERS + USER.save, body);
+		const endpointPath = USERS + USER.save;
+		return super.post(endpointPath, body);
 	}
-	update(uri, body) {
-		return super.post(USERS + USER.update, body);
+
+	/**
+	 * 
+	 * @param {Number} id 
+	 * @param {Object} body 
+	 */
+	update(id, body) {
+		const endpointPath = USERS + USER.update + id;
+		return super.post(endpointPath, body);
 	}
+
+	/**
+	 * 
+	 * @param {Number} id 
+	 */
 	findById(id) {
-		return super.get(`${USERS + USER.findById + id}`);
+		const endpointPath = USERS + USER.findById + id;
+		return super.get(endpointPath);
 	}
+
+	/**
+	 * 
+	 * @param {String} username 
+	 */
+	findByUsername(username) {
+		const endpointPath = USERS + USER.findByUsername + username;
+		return super.get(endpointPath);
+	}
+
+	/**
+	 * 
+	 * @param {Object} filter 
+	 */
 	findAll(filter) {
-		return super.get(USERS + USER.findAll);
+		const endpointPath = USERS + USER.findAll;
+		return super.get(endpointPath);
 	}
-	delete(uri) {
-		return super.delete(uri);
+
+	/**
+	 * 
+	 * @param {Number} id 
+	 */
+	delete(id) {
+		const endpointPath = USERS + USER.delete + id;
+		return super.delete(endpointPath);
 	}
 }
 
