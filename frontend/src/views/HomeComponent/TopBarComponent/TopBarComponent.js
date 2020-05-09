@@ -7,8 +7,6 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Overlay from 'react-bootstrap/Overlay';
-import Popover from 'react-bootstrap/Popover';
-import Tooltip from 'react-bootstrap/Tooltip';
 import { FaSearch } from 'react-icons/fa';
 
 import UserService from './../../../services/UserService';
@@ -113,7 +111,6 @@ export class TopBarComponent extends React.Component {
 								</div>
 							)}
 					</Overlay>
-					{/* disabled={this.state.searchDisabled} */}
 					<FormControl
 						ref={this.target}
 						size="sm"

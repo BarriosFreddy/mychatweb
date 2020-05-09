@@ -24,7 +24,6 @@ export default {
 	headerItem: {
 		padding: '3px', 
 		background: 'transparent',
-		cursor: 'pointer',
 		fontWeight: 'bold'
 	},
 	item: {
@@ -32,7 +31,20 @@ export default {
 		background: 'transparent',
 		cursor: 'pointer'
 	},
+	searchItem: {
+		padding: '3px', 
+		cursor: 'pointer'
+	},
 	searchButton: {
 		background: Colors.green
-	}
+	},
+	searchButton: {
+		height: '4vh',
+		border: '0px',
+		background: 'transparent'
+	},
+	buttonIcon: {
+		marginTop: '-5px',
+		color: Colors.white
+	},
 }
