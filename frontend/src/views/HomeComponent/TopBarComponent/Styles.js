@@ -19,5 +19,34 @@ export default {
 	logo: {
 		color: Colors.white,
 		lineHeight: 2
+	},
+	search: {
+		width: '40vw',
+		margin: '3px auto 0 auto'
+	},
+	searchInput: {
+		height: '4vh',
+	},
+	searchButton: {
+		height: '4vh',
+		background: 'white'
+	},
+	buttonIcon: {
+		marginTop: '-5px'
+	},
+	item: {
+		padding: '3px',
+		background: 'transparent',
+		cursor: 'pointer'
+	},
+	searchOverlay: {
+		overflow: 'auto',
+		backgroundColor: 'white',
+		padding: '2px 10px',
+		borderRadius: 3,
+		width: '45vw',
+		minHeight: '10vh',
+		maxHeight: '30vh',
+		border: '1px solid gray',
 	}
 }

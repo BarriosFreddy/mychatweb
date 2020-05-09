@@ -59,6 +59,10 @@ class UserService extends Middleware {
 		const endpointPath = USERS + USER.delete + id;
 		return super.delete(endpointPath);
 	}
+
+	getCurrentUser() {
+		return JSON.parse(localStorage.getItem(Constants.CURRENT_USER));
+	}
 }
 
 export default new UserService();

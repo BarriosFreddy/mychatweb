@@ -4,7 +4,7 @@ export default {
 	container: {
 		height: '95vh',
 		width: '20vw',
-		background: '#5c3a58',
+		background: Colors.voilet,
 		color: Colors.white,
 		display: 'flex',
 		flexDirection: 'column',
@@ -15,6 +15,12 @@ export default {
 		margin: '5px',
 		height: '24px',
 	},
+	currentUser: {
+		padding: '15px', 
+		background: 'transparent',
+		cursor: 'pointer',
+		fontWeight: 'bold'
+	},
 	headerItem: {
 		padding: '3px', 
 		background: 'transparent',
@@ -23,10 +29,6 @@ export default {
 	},
 	item: {
 		padding: '3px', 
-		background: 'transparent',
-		cursor: 'pointer'
-	},
-	currentUser: {
 		background: 'transparent',
 		cursor: 'pointer'
 	},
