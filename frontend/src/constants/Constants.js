@@ -7,9 +7,10 @@ const PATHS_GENERIC = {
 }
 
 const Constants = {
-	// API: 'https://mychatweb-backend.herokuapp.com',
-	API: 'http://localhost:3000',
-	COMUNICATION_ENDPOINT: "http://localhost:4000",
+	API: 'https://mychatweb-backend.herokuapp.com',
+	// API: 'http://localhost:3000',
+	COMUNICATION_ENDPOINT: "https://mychatweb-backend.herokuapp.com",
+	// COMUNICATION_ENDPOINT: "http://localhost:4000",
 	HTTP_VERBS: {
 		POST: 'post',
 		PUT: 'put',
