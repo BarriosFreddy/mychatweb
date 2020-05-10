@@ -9,6 +9,7 @@ const PATHS_GENERIC = {
 const Constants = {
 	// API: 'https://mychatweb-backend.herokuapp.com',
 	API: 'http://localhost:3000',
+	COMUNICATION_ENDPOINT: "http://localhost:4000",
 	HTTP_VERBS: {
 		POST: 'post',
 		PUT: 'put',
@@ -30,7 +31,8 @@ const Constants = {
 		},
 		CONVERSATION: {
 			...PATHS_GENERIC,
-			findByType: '/type/'
+			findByType: '/type/',
+			findByTypeAndMember: '/type/:type/member/:member'
 		}
 	}
 }

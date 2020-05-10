@@ -3,144 +3,105 @@ import Styles from './Styles';
 
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import { FaPlus } from 'react-icons/fa';
 
 import UserService from './../../../../services/UserService';
 import ConversationService from './../../../../services/ConversationService';
-
-
-const GROUP_TYPE = 'G';
+import ConversationType from '../../../../constants/ConversationType';
+import { GroupFormModal } from './GroupFormModal/GroupFormModal';
 
 export class ConversationsListComponent extends React.Component {
 	constructor(props) {
 		super()
-		this.handleClickUser = this.handleClickUser.bind(this);
+		this.handleClickPersonalConversation = this.handleClickPersonalConversation.bind(this);
 		this.handleClickGroup = this.handleClickGroup.bind(this);
 		this.handleClickNewGroup = this.handleClickNewGroup.bind(this);
 		this.handleCloseModal = this.handleCloseModal.bind(this);
-		this.handleChangeGroupname = this.handleChangeGroupname.bind(this);
-		this.handleClickUserSearch = this.handleClickUserSearch.bind(this);
-		this.handleChangeSearch = this.handleChangeSearch.bind(this);
-		this.resolveResults = this.resolveResults.bind(this);
+		this.handleSaveGroup = this.handleSaveGroup.bind(this);
 
+		const currentUser = UserService.getCurrentUser();
 		this.state = {
 			search: '',
-			usersList: [],
+			personalsConversationsList: [],
 			groupsList: [],
-			currentUser: null,
+			currentUser,
 			searchDisabled: false,
 			showModal: false,
-			groupname: '',
-			usersListSearch: [],
-			selectedUsersList: [],
 		}
 	}
 
 	componentWillMount() {
-		this.listUsers();
-		this.listGroups();
-		this.getCurrentUser();
+		this.listPersonalsConversations();
+		this.listGroupalsConversations();
 	}
 
-	getCurrentUser() {
-		const currentUser = UserService.getCurrentUser();
-		this.setState({ currentUser });
-	}
-
-	listUsers() {
-		UserService.findAll().then(usersList => {
-			const data = usersList.data.filter(user => user._id !== this.state.currentUser._id);
-			this.setState({ usersList: data });
-		}).catch(error => {
-			console.log(error);
-		});
-	}
-
-	listGroups() {
-		ConversationService.findByType(GROUP_TYPE).then(groupsList => {
-			const { data } = groupsList;
-			this.setState({ groupsList: data });
-		}).catch(error => {
-			console.log(error);
-		});
-	}
-
-	handleChangeGroupname(event) {
-		this.setState({ groupname: event.target.value });
-	}
-
-	handleChangeSearch(event) {
-		const search = event.target.value;
-		this.setState({ search });
-		this.handleClickSearch(search);
-	}
-
-	handleClickSearch(search) {
-		this.setState({ usersListSearch: [] });
-		if (search) {
-			this.findByUsername(search);
-		} else {
-			this.listUsersSearch();
+	componentWillReceiveProps(props) {
+		if (props.personalConversationSaved) {
+			this.listPersonalsConversations();
 		}
-
 	}
 
-	findByUsername(search) {
-		UserService.findByUsername(search).then(this.resolveResults).catch(this.catchError);
+	listPersonalsConversations() {
+		ConversationService.findByTypeAndMember(ConversationType.PERSONAL, this.state.currentUser._id)
+			.then(response => {
+				const { data } = response;
+				console.log('data', data);
+				this.setState({ personalsConversationsList: data });
+			}).catch(error => {
+				console.log(error);
+			});
 	}
 
-	listUsersSearch() {
-		UserService.findAll().then(this.resolveResults).catch(this.catchError);
+	listGroupalsConversations() {
+		ConversationService.findByTypeAndMember(ConversationType.GROUPAL, this.state.currentUser._id)
+			.then(response => {
+				const { data } = response;
+				this.setState({ groupsList: data });
+			}).catch(error => {
+				console.log(error);
+			});
 	}
 
-	resolveResults(usersListSearch) {
-		const data = usersListSearch.data.filter(user => user._id !== this.state.currentUser._id);
-		this.setState({ usersListSearch: data, show: true });
-	}
-
-	catchError(error) {
-		console.log(error);
-	}
-
-
-	handleClickUserSearch(user) {
-		const { selectedUsersList } = this.state;
-		console.log(selectedUsersList);
-		
-		if (!selectedUsersList.includes(user)) {
-			user.selected = true;
-			selectedUsersList.push(user);
-			this.setState({ selectedUsersList });
-		} else {
-			const index = selectedUsersList.indexOf(user);
-			user.selected = false;
-			const newSelectedUsersList = selectedUsersList.splice(index, 1);
-			this.setState({ selectedUsersList: newSelectedUsersList });
-		}
-
-	}
-
-	handleClickUser(user) {
-		console.log(user);
+	handleClickPersonalConversation(conversation) {
+		this.props.selectedGroup(conversation);
 	}
 
 	handleClickGroup(group) {
-		console.log(group);
+		this.props.selectedGroup(group);
 	}
 
 	handleClickNewGroup() {
 		this.setState({ showModal: true });
-		this.listUsersSearch()
 	}
 
 	handleCloseModal() {
 		this.setState({ showModal: false });
 	}
 
+	handleSaveGroup(group) {
+		console.log(group);
+		if (group) {
+			group.type = ConversationType.GROUPAL;
+			group.members.push(this.state.currentUser._id);
+			ConversationService.save(group).then(response => {
+				if (response.data) {
+					this.listGroupalsConversations();
+				}
+			}).catch(error => {
+				console.log(error);
+			});
+		}
+		this.setState({ showModal: false });
+	}
+
+	getUsernamePairMember(members) {
+		const pairMember = members.filter(member => member._id !== this.state.currentUser._id);
+		return pairMember ? pairMember[0].username : 'Anonymous';
+	}
+
 	render() {
 		return (<div style={Styles.container}>
+			{/* Personal conversations list */}
 			<div style={{ height: '55vh', overflow: 'auto' }}>
 				<ListGroup variant="flush">
 					<ListGroup.Item key={this.state.currentUser._id}
@@ -149,14 +110,15 @@ export class ConversationsListComponent extends React.Component {
 					>{this.state.currentUser.username}</ListGroup.Item>
 				</ListGroup>
 				<ListGroup variant="flush">
-					{this.state.usersList.map(user =>
-						<ListGroup.Item key={user._id}
+					{this.state.personalsConversationsList.map(conversation =>
+						<ListGroup.Item key={conversation._id}
 							style={Styles.item}
-							onClick={() => this.handleClickUser(user)}
-						>{user.username}</ListGroup.Item>
+							onClick={() => this.handleClickPersonalConversation(conversation)}
+						>{this.getUsernamePairMember(conversation.members)}</ListGroup.Item>
 					)}
 				</ListGroup>
 			</div>
+			{/* Groupal conversations list */}
 			<div style={{ height: '40vh', overflow: 'auto' }}>
 				<ListGroup.Item style={Styles.headerItem}>Groups
 				<Button variant="light"
@@ -166,51 +128,9 @@ export class ConversationsListComponent extends React.Component {
 						<FaPlus style={Styles.buttonIcon} />
 					</Button>
 				</ListGroup.Item>
-				<Modal show={this.state.showModal} onHide={this.handleCloseModal}>
-					<Modal.Header closeButton>
-						<Modal.Title>Create a group</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<Form.Control type="text" placeholder="Name"
-							size="sm"
-							value={this.state.groupname}
-							onChange={this.handleChangeGroupname} />
-						<p>Selected users</p>
-						<ul>
-							{this.state.selectedUsersList &&
-								this.state.selectedUsersList.map(user => <li key={user._id}>{user.username}</li>)}
-						</ul>
-						<Form.Group controlId="formHorizontalUsername">
-							<Form.Label>Suggested users</Form.Label>
-							<Form.Control
-								ref={this.target}
-								size="sm"
-								placeholder="Search"
-								type="search"
-								value={this.state.search}
-								onChange={this.handleChangeSearch}
-							/>
-						</Form.Group>
-						<ListGroup style={{ maxHeight: '100px', overflow: 'auto' }}>
-							{this.state.usersListSearch.length === 0 && <ListGroup.Item key={1}
-								style={Styles.item}
-								onClick={() => { }}
-							>No records</ListGroup.Item>}
-							{this.state.usersListSearch.map(user =>
-								<ListGroup.Item key={user._id}
-									style={Styles.searchItem}
-									active={user.selected}
-									onClick={() => this.handleClickUserSearch(user)}
-								>{user.username}</ListGroup.Item>
-							)}
-						</ListGroup>
-					</Modal.Body>
-					<Modal.Footer>
-						<Button variant="primary" onClick={this.handleCloseModal}>
-							Save
-          				</Button>
-					</Modal.Footer>
-				</Modal>
+				{this.state.showModal && <GroupFormModal
+					closeModal={this.handleCloseModal}
+					save={this.handleSaveGroup} ></GroupFormModal>}
 				<ListGroup variant="flush">
 					{this.state.groupsList.map(group =>
 						<ListGroup.Item key={group._id}

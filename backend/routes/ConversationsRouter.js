@@ -7,7 +7,17 @@ const { CONVERSATION } = Constants.RESOURCES;
 router.post(CONVERSATION.save, (request, response) => {
 	const { body } = request;
 	ConversationService.save(body)
-		.then(conversation => response.send(conversation))
+		.then(conversation => {
+			console.log("conversation saved", conversation);
+			if (conversation && ConversationService.getSocket()) {
+				console.log("Connecting a new socket!");
+				ConversationService.getSocket().on(conversation._id, (message) => {
+					console.log('message: ' + message);
+					ConversationService.getIOServer().emit(conversation._id, message);
+				});
+			}
+			response.send(conversation)
+		})
 		.catch(error => console.error(error));
 });
 
@@ -48,6 +58,17 @@ router.get(CONVERSATION.findById, (request, response) => {
 router.get(CONVERSATION.findByType, (request, response) => {
 	const { type } = request.params;
 	ConversationService.findByType(type)
+		.then(conversations => response.send(conversations))
+		.catch(error => {
+			response.status(500).send(error);
+			console.error(error);
+		});
+});
+
+router.get(CONVERSATION.findByTypeAndMember, (request, response) => {
+	const { type } = request.params;
+	const { member } = request.params;
+	ConversationService.findByTypeAndMember(type, member)
 		.then(conversations => response.send(conversations))
 		.catch(error => {
 			response.status(500).send(error);

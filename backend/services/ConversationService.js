@@ -1,7 +1,10 @@
 const Conversation = require('../models/Conversation');
 
 class ConversationService {
-	constructor() { }
+	constructor() {
+		this.socket = null;
+		this.IOServer = null;
+	}
 
 	/**
 	 * 
@@ -19,13 +22,14 @@ class ConversationService {
 	 */
 	async update(id, conversation) {
 		const conversationRetrieved = await Conversation.findOne({ _id: id });
-		const conversationUpdated = {
-			...conversationRetrieved,
-			...conversation
-		};
-		const conversationModel = new Conversation(conversationUpdated);
-		conversationModel.isNew = false;
-		return conversationModel.save();
+		conversationRetrieved.name = conversation.name;
+		conversationRetrieved.type = conversation.type;
+		conversationRetrieved.members = conversation.members;
+		conversationRetrieved.messages = conversation.messages;
+		conversationRetrieved.createdAt = conversation.createdAt;
+		conversationRetrieved.updatedAt = conversation.updatedAt;
+		conversationRetrieved.isNew = false;
+		return conversationRetrieved.save();
 	}
 
 	/**
@@ -57,10 +61,35 @@ class ConversationService {
 
 	/**
 	 * 
+	 * @param {String} type 
+	 * @param {ObjectId} userId 
+	 */
+	findByTypeAndMember(type, member) {
+		return Conversation.find({ type, members: member }).populate('members');
+	}
+
+	/**
+	 * 
 	 * @param {Number} id 
 	 */
 	async delete(id) {
 		return Conversation.findByIdAndDelete(id);
+	}
+
+	setSocket(socket) {
+		this.socket = socket;
+	}
+
+	getSocket() {
+		return this.socket;
+	}
+
+	setIOServer(IOServer) {
+		this.IOServer = IOServer;
+	}
+
+	getIOServer() {
+		return this.IOServer;
 	}
 }
 

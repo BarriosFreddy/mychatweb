@@ -51,8 +51,16 @@ class UserService {
 	 * 
 	 * @param {String} username 
 	 */
-	findByUsername(username) {
+	findByUsernameInsensitive(username) {
 		return User.find({ username: new RegExp('.*' + username + '.*', "i") });
+	}
+
+		/**
+	 * 
+	 * @param {String} username 
+	 */
+	findByUsername(username) {
+		return User.findOne({ username });
 	}
 
 	/**

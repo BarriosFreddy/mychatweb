@@ -3,5 +3,6 @@ export default {
 		height: '78vh',
 		width: '80vw',
 		background: '#fff',
+		overflow: 'auto'
 	}
 }

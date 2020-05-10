@@ -24,7 +24,7 @@ class ConversationService extends Middleware {
 	 */
 	update(id, body) {
 		const endpointPath = CONVERSATIONS + CONVERSATION.update + id;
-		return super.post(endpointPath, body);
+		return super.put(endpointPath, body);
 	}
 
 	/**
@@ -35,6 +35,18 @@ class ConversationService extends Middleware {
 		const endpointPath = CONVERSATIONS + CONVERSATION.findById + id;
 		return super.get(endpointPath);
 	}
+
+	/**
+	 * 
+	 * @param {String} type 
+	 * @param {ObjectId} member 
+	 */
+	findByTypeAndMember(type, member) {
+		const endpoint = CONVERSATION.findByTypeAndMember.replace(':type', type).replace(':member', member);
+		const endpointPath = CONVERSATIONS + endpoint;
+		return super.get(endpointPath);
+	}
+
 
 	/**
 	 * 

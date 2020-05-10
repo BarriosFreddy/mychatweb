@@ -25,6 +25,7 @@
     "mongoose": "^5.9.11",
     "mongoose-pagination": "^1.0.0",
     "nodemon": "^2.0.3",
+    "socket.io": "^2.3.0",
     "yarn": "^1.22.4"
   }
 }

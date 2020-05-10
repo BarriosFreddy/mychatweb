@@ -5,7 +5,10 @@ const ObjectId = Schema.Types.ObjectId;
 const conversationSchema = new Schema({
 	name: { type: String },
 	type: { type: String },
-	members: [ObjectId],
+	members: [{
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+	}],
 	messages: [{
 		author: { type: ObjectId, ref: 'User' },
 		message: { type: String },

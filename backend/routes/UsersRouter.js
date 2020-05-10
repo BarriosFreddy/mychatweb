@@ -52,7 +52,7 @@ router.get(USER.findById, (request, response) => {
 
 router.get(USER.findByUsername, (request, response) => {
 	const { username } = request.params;
-	UserService.findByUsername(username)
+	UserService.findByUsernameInsensitive(username)
 		.then(userList => response.send(userList))
 		.catch(error => {
 			response.status(500).send(error);

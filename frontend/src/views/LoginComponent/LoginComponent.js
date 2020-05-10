@@ -87,11 +87,12 @@ export class LoginComponent extends React.Component {
 					</Form.Group>}
 					<Button style={Styles.buttonLogin} block variant="primary"
 						disabled={this.state.disable}
-						onClick={this.handleSubmit}>
+						onClick={this.handleSubmit}
+						type="submit">
 						LOGIN
   					</Button>
 					<Link to="/register">
-						<Button style={Styles.buttonRegister} block variant="primary" type="submit">
+						<Button style={Styles.buttonRegister} block variant="primary">
 							SIGN UP
   					</Button>
 					</Link>

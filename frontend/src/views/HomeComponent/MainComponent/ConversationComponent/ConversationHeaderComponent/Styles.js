@@ -6,6 +6,11 @@ export default {
 		width: '80vw',
 		background: Colors.white,
 		borderColor: Colors.orange,
-		border: '1px'
+		borderBottom: '1px solid'
+	},
+	conversationName: {
+		fontSize: 20,
+		fontWeight: 'bold',
+		padding: '7px'
 	}
 }

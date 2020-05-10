@@ -26,6 +26,7 @@ export class TopBarComponent extends React.Component {
 		this.resolveResults = this.resolveResults.bind(this);
 		this.handleChangeSearch = this.handleChangeSearch.bind(this);
 		this.handleClickSearch = this.handleClickSearch.bind(this);
+		this.handleClickUser = this.handleClickUser.bind(this);
 
 	}
 
@@ -69,10 +70,14 @@ export class TopBarComponent extends React.Component {
 	}
 
 	catchError(error) {
-		this.setState({ show: true });
+		this.setState({ show: false });
 		console.log(error);
 	}
 
+	handleClickUser(user) {
+		this.setState({ show: false });
+		this.props.onClickSearchUser(user);
+	}
 
 
 	render() {
