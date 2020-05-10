@@ -22,7 +22,7 @@ export class ConversationComponent extends React.Component {
 			conversationId: null,
 			currentUser
 		}
-		this.socket = socketIOClient(Constants.COMUNICATION_ENDPOINT);
+		this.socket = socketIOClient(Constants.API);
 	}
 
 	componentWillMount() {
@@ -32,7 +32,6 @@ export class ConversationComponent extends React.Component {
 		if (props.selectedConversation) {
 			const { selectedConversation } = props;
 			const conversationId = selectedConversation._id;
-			console.log('selectedConversation', selectedConversation);
 
 			this.setState({
 				messages: selectedConversation.messages,
@@ -43,7 +42,6 @@ export class ConversationComponent extends React.Component {
 			this.socket.emit('joinMe', conversationId);
 			this.socket.on('messages', data => {
 				const { messages } = this.state;
-				console.log('Message received', data);
 				const messageInList = messages.filter(message => message._id === data._id);
 				if (messageInList.length === 0) {
 					messages.push(data);
@@ -66,8 +64,6 @@ export class ConversationComponent extends React.Component {
 				message,
 			}
 			selectedConversation.messages.push(messageToSave);
-			console.log('selectedConversation', selectedConversation);
-			
 			this.saveMessage(conversationId, selectedConversation);
 		}
 	}

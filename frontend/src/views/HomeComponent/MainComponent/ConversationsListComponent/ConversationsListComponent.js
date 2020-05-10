@@ -9,12 +9,12 @@ import UserService from './../../../../services/UserService';
 import ConversationService from './../../../../services/ConversationService';
 import ConversationType from '../../../../constants/ConversationType';
 import { GroupFormModal } from './GroupFormModal/GroupFormModal';
+import { ProfileComponent } from './ProfileComponent/ProfileComponent';
 
 export class ConversationsListComponent extends React.Component {
 	constructor(props) {
 		super()
-		this.handleClickPersonalConversation = this.handleClickPersonalConversation.bind(this);
-		this.handleClickGroup = this.handleClickGroup.bind(this);
+		this.handleClickConversation = this.handleClickConversation.bind(this);
 		this.handleClickNewGroup = this.handleClickNewGroup.bind(this);
 		this.handleCloseModal = this.handleCloseModal.bind(this);
 		this.handleSaveGroup = this.handleSaveGroup.bind(this);
@@ -36,16 +36,15 @@ export class ConversationsListComponent extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		if (props.personalConversationSaved) {
+		if (props.selectedConversation) {
 			this.listPersonalsConversations();
 		}
 	}
 
 	listPersonalsConversations() {
-		ConversationService.findByTypeAndMember(ConversationType.PERSONAL, this.state.currentUser._id)
+		ConversationService.findByTypeAndMembers(ConversationType.PERSONAL, this.state.currentUser._id)
 			.then(response => {
 				const { data } = response;
-				console.log('data', data);
 				this.setState({ personalsConversationsList: data });
 			}).catch(error => {
 				console.log(error);
@@ -53,7 +52,7 @@ export class ConversationsListComponent extends React.Component {
 	}
 
 	listGroupalsConversations() {
-		ConversationService.findByTypeAndMember(ConversationType.GROUPAL, this.state.currentUser._id)
+		ConversationService.findByTypeAndMembers(ConversationType.GROUPAL, this.state.currentUser._id)
 			.then(response => {
 				const { data } = response;
 				this.setState({ groupsList: data });
@@ -62,12 +61,8 @@ export class ConversationsListComponent extends React.Component {
 			});
 	}
 
-	handleClickPersonalConversation(conversation) {
-		this.props.selectedGroup(conversation);
-	}
-
-	handleClickGroup(group) {
-		this.props.selectedGroup(group);
+	handleClickConversation(conversation) {
+		this.props.onClickConversation(conversation);
 	}
 
 	handleClickNewGroup() {
@@ -103,17 +98,13 @@ export class ConversationsListComponent extends React.Component {
 		return (<div style={Styles.container}>
 			{/* Personal conversations list */}
 			<div style={{ height: '55vh', overflow: 'auto' }}>
-				<ListGroup variant="flush">
-					<ListGroup.Item key={this.state.currentUser._id}
-						style={Styles.currentUser}
-						onClick={() => { }}
-					>{this.state.currentUser.username}</ListGroup.Item>
-				</ListGroup>
+				
+				<ProfileComponent></ProfileComponent>
 				<ListGroup variant="flush">
 					{this.state.personalsConversationsList.map(conversation =>
 						<ListGroup.Item key={conversation._id}
 							style={Styles.item}
-							onClick={() => this.handleClickPersonalConversation(conversation)}
+							onClick={() => this.handleClickConversation(conversation)}
 						>{this.getUsernamePairMember(conversation.members)}</ListGroup.Item>
 					)}
 				</ListGroup>
@@ -135,7 +126,7 @@ export class ConversationsListComponent extends React.Component {
 					{this.state.groupsList.map(group =>
 						<ListGroup.Item key={group._id}
 							style={Styles.item}
-							onClick={() => this.handleClickGroup(group)}>{group.name}</ListGroup.Item>
+							onClick={() => this.handleClickConversation(group)}>{group.name}</ListGroup.Item>
 					)}
 				</ListGroup>
 			</div>

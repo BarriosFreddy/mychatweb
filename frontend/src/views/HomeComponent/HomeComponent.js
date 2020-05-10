@@ -6,21 +6,21 @@ import { MainComponent } from './MainComponent/MainComponent';
 export class HomeComponent extends React.Component {
 	constructor(props) {
 		super()
-		this.onClickSearchUser = this.onClickSearchUser.bind(this);
+		this.onClickSearch = this.onClickSearch.bind(this);
 		this.state = {
-			selectedUser: null
+			selectedConversation: null
 		}
 
 	}
 
-	onClickSearchUser(selectedUser) {
-		this.setState({ selectedUser });
+	onClickSearch(selectedConversation) {
+		this.setState({ selectedConversation });
 	}
 
 	render() {
 		return (<div style={Styles.container}>
-			<TopBarComponent onClickSearchUser={this.onClickSearchUser}></TopBarComponent>
-			<MainComponent selectedUser={this.state.selectedUser}></MainComponent>
+			<TopBarComponent onClickSearch={this.onClickSearch}></TopBarComponent>
+			<MainComponent selectedConversation={this.state.selectedConversation}></MainComponent>
 		</div>)
 	}
 }

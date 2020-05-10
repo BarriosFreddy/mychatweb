@@ -34,19 +34,29 @@ export default {
 	buttonIcon: {
 		marginTop: '-5px'
 	},
+	closeSection: {
+		width: '100%',
+		height: '27px'
+	},
+	buttonClose: {
+		margin: '5px',
+		float: 'right'
+	},
 	item: {
 		padding: '3px',
 		background: 'transparent',
 		cursor: 'pointer'
 	},
 	searchOverlay: {
-		overflow: 'auto',
 		backgroundColor: 'white',
-		padding: '2px 10px',
 		borderRadius: 3,
 		width: '45vw',
-		minHeight: '10vh',
-		maxHeight: '30vh',
 		border: '1px solid gray',
+	},
+	searchContentOverlay: {
+		overflow: 'auto',
+		padding: '10px 2px 10px 2px',
+		minHeight: '10vh',
+		maxHeight: '35vh',
 	}
 }

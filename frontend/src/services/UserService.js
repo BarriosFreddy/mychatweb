@@ -21,7 +21,7 @@ class UserService extends Middleware {
 	 */
 	update(id, body) {
 		const endpointPath = USERS + USER.update + id;
-		return super.post(endpointPath, body);
+		return super.put(endpointPath, body);
 	}
 
 	/**

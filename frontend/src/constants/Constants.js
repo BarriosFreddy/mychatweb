@@ -7,10 +7,8 @@ const PATHS_GENERIC = {
 }
 
 const Constants = {
-	API: 'https://mychatweb-backend.herokuapp.com',
-	// API: 'http://localhost:3000',
-	COMUNICATION_ENDPOINT: "https://mychatweb-backend.herokuapp.com",
-	// COMUNICATION_ENDPOINT: "http://localhost:4000",
+	// API: 'https://mychatweb-backend.herokuapp.com',
+	API: 'http://localhost:3000',
 	HTTP_VERBS: {
 		POST: 'post',
 		PUT: 'put',
@@ -22,7 +20,8 @@ const Constants = {
 	RESOURCES: {
 		AUTHENTICATION: '/authentication',
 		USERS: '/users',
-		CONVERSATIONS: '/conversations'
+		CONVERSATIONS: '/conversations',
+		FILES: '/files'
 	},
 	ENDPOINTS: {
 		LOGIN: '/login',
@@ -33,7 +32,13 @@ const Constants = {
 		CONVERSATION: {
 			...PATHS_GENERIC,
 			findByType: '/type/',
-			findByTypeAndMember: '/type/:type/member/:member'
+			findByName: '/name/',
+			findByTypeAndMembers: '/type/:type/members/:members',
+			findByTypeAndName: '/type/:type/name/:name',
+			findPersonalConversation: '/members/:members'
+		},
+		FILE: {
+			upload: '/',
 		}
 	}
 }

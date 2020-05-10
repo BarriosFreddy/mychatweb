@@ -9,13 +9,6 @@ router.post(CONVERSATION.save, (request, response) => {
 	ConversationService.save(body)
 		.then(conversation => {
 			console.log("conversation saved", conversation);
-			if (conversation && ConversationService.getSocket()) {
-				console.log("Connecting a new socket!");
-				ConversationService.getSocket().on(conversation._id, (message) => {
-					console.log('message: ' + message);
-					ConversationService.getIOServer().emit(conversation._id, message);
-				});
-			}
 			response.send(conversation)
 		})
 		.catch(error => console.error(error));
@@ -65,10 +58,41 @@ router.get(CONVERSATION.findByType, (request, response) => {
 		});
 });
 
-router.get(CONVERSATION.findByTypeAndMember, (request, response) => {
-	const { type } = request.params;
-	const { member } = request.params;
-	ConversationService.findByTypeAndMember(type, member)
+router.get(CONVERSATION.findByName, (request, response) => {
+	const { name } = request.params;
+	ConversationService.findByName(name)
+		.then(conversations => response.send(conversations))
+		.catch(error => {
+			response.status(500).send(error);
+			console.error(error);
+		});
+});
+
+router.get(CONVERSATION.findByTypeAndName, (request, response) => {
+	const { type, name } = request.params;
+	ConversationService.findByTypeAndName(type, name)
+		.then(conversations => response.send(conversations))
+		.catch(error => {
+			response.status(500).send(error);
+			console.error(error);
+		});
+});
+
+router.get(CONVERSATION.findByTypeAndMembers, (request, response) => {
+	const { type, members } = request.params;
+	const membersArray = members.split(',');
+	ConversationService.findByTypeAndMembers(type, membersArray)
+		.then(conversations => response.send(conversations))
+		.catch(error => {
+			response.status(500).send(error);
+			console.error(error);
+		});
+});
+
+router.get(CONVERSATION.findPersonalConversation, (request, response) => {
+	const { members } = request.params;
+	const membersArray = members.split(',');
+	ConversationService.findPersonalConversation(membersArray)
 		.then(conversations => response.send(conversations))
 		.catch(error => {
 			response.status(500).send(error);

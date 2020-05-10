@@ -18,6 +18,14 @@ export default class Middleware {
 		});
 	}
 
+	postFormData(uri, formData) {
+		return API.post(uri, formData, {
+			headers: {
+				'Content-Type': 'multipart/form-data'
+			}
+		})
+	}
+
 	/**
 	 * 
 	 * @param {String} uri 

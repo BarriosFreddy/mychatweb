@@ -17,26 +17,21 @@ export class GroupFormModal extends React.Component {
 		this.resolveResults = this.resolveResults.bind(this);
 		this.getGroupData = this.getGroupData.bind(this);
 
+		const currentUser = UserService.getCurrentUser();
 		this.state = {
 			showModal: true,
 			groupname: '',
 			usersListSearch: [],
 			selectedUsersList: [],
-			currentUser: null,
+			currentUser,
 		}
 	}
 
 	componentDidMount() {
-		this.getCurrentUser();
 		this.listUsersSearch();
 	}
 
 	componentDidUpdate() {
-	}
-
-	getCurrentUser() {
-		const currentUser = UserService.getCurrentUser();
-		this.setState({ currentUser });
 	}
 
 	handleChangeGroupname(event) {

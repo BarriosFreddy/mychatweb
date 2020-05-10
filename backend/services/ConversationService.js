@@ -1,9 +1,8 @@
 const Conversation = require('../models/Conversation');
+const ConversationType = require('../constants/ConversationType');
 
 class ConversationService {
 	constructor() {
-		this.socket = null;
-		this.IOServer = null;
 	}
 
 	/**
@@ -34,12 +33,8 @@ class ConversationService {
 
 	/**
 	 * 
-	 * @param {Object} filter
 	 */
-	findAll(filter) {
-		if (filter) {
-			return Conversation.find(filter);
-		}
+	findAll() {
 		return Conversation.find();
 	}
 
@@ -61,11 +56,37 @@ class ConversationService {
 
 	/**
 	 * 
-	 * @param {String} type 
-	 * @param {ObjectId} userId 
+	 * @param {String} name 
 	 */
-	findByTypeAndMember(type, member) {
-		return Conversation.find({ type, members: member }).populate('members');
+	findByName(name) {
+		return Conversation.find({ name: new RegExp('.*' + name + '.*', "i") });
+	}
+
+	/**
+	 * 
+	 * @param {String} type 
+	 * @param {[ObjectId]} membersArray 
+	 */
+	findByTypeAndMembers(type, membersArray) {
+		return Conversation.find({ type, members: { $in: membersArray } }).populate('members');
+	}
+
+	/**
+	 * 
+	 * @param {String} type 
+	 * @param {String} name 
+	 */
+	findByTypeAndName(type, name) {
+		return Conversation.find({ type, name: new RegExp('.*' + name + '.*', "i") }).populate('members');
+	}
+
+	/**
+	 * 
+	 * @param {[ObjectId]} membersArray 
+	 */
+	findPersonalConversation(membersArray) {
+		return Conversation.find({ type: ConversationType.PERSONAL, members: membersArray })
+			.populate('members');
 	}
 
 	/**
@@ -74,22 +95,6 @@ class ConversationService {
 	 */
 	async delete(id) {
 		return Conversation.findByIdAndDelete(id);
-	}
-
-	setSocket(socket) {
-		this.socket = socket;
-	}
-
-	getSocket() {
-		return this.socket;
-	}
-
-	setIOServer(IOServer) {
-		this.IOServer = IOServer;
-	}
-
-	getIOServer() {
-		return this.IOServer;
 	}
 }
 

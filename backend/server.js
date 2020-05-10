@@ -27,9 +27,6 @@ const io = socketIo(server);
 io.on("connection", (socket) => {
 	console.log("Client connected");
 
-	ConversationService.setSocket(socket);
-	ConversationService.setIOServer(io);
-
 	socket.on('joinMe', (conversationId) => {
 		console.log('conversationId', conversationId);
 		socket.join(conversationId, () => {
@@ -46,7 +43,4 @@ io.on("connection", (socket) => {
 	});
 });
 
-server.listen(Constants.COMUNICATION_PORT, () => console.log(`Listening on port 4000 - comunication`));
-
-app.listen(process.env.PORT || Constants.API_PORT, () => console.log('Listening on 3000 - API'))
-
+server.listen(process.env.PORT || Constants.API_PORT, () => console.log(`Listening on port 3000`));

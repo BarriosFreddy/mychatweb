@@ -19,13 +19,16 @@ class UserService {
 	 */
 	async update(id, user) {
 		const userRetrieved = await User.findOne({ _id: id });
-		const userUpdated = {
-			...userRetrieved,
-			...user
-		};
-		const userModel = new User(userUpdated);
-		userModel.isNew = false;
-		return userModel.save();
+		userRetrieved.imageUrl = user.imageUrl;
+		userRetrieved.username = user.username;
+		userRetrieved.password = user.password;
+		userRetrieved.groups = user.groups;
+		userRetrieved.active = user.active;
+		userRetrieved.createdAt = user.createdAt;
+		userRetrieved.updatedAt = user.updatedAt;
+
+		userRetrieved.isNew = false;
+		return userRetrieved.save();
 	}
 
 	/**
@@ -55,10 +58,10 @@ class UserService {
 		return User.find({ username: new RegExp('.*' + username + '.*', "i") });
 	}
 
-		/**
-	 * 
-	 * @param {String} username 
-	 */
+	/**
+ * 
+ * @param {String} username 
+ */
 	findByUsername(username) {
 		return User.findOne({ username });
 	}

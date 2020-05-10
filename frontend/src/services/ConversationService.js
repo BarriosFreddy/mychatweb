@@ -39,10 +39,21 @@ class ConversationService extends Middleware {
 	/**
 	 * 
 	 * @param {String} type 
-	 * @param {ObjectId} member 
+	 * @param {[ObjectId]} members 
 	 */
-	findByTypeAndMember(type, member) {
-		const endpoint = CONVERSATION.findByTypeAndMember.replace(':type', type).replace(':member', member);
+	findByTypeAndMembers(type, members) {
+		const endpoint = CONVERSATION.findByTypeAndMembers.replace(':type', type).replace(':members', members);
+		const endpointPath = CONVERSATIONS + endpoint;
+		return super.get(endpointPath);
+	}
+
+	/**
+	 * 
+	 * @param {String} type 
+	 * @param {[ObjectId]} members 
+	 */
+	findPersonalConversation(members) {
+		const endpoint = CONVERSATION.findPersonalConversation.replace(':members', members);
 		const endpointPath = CONVERSATIONS + endpoint;
 		return super.get(endpointPath);
 	}
@@ -50,7 +61,7 @@ class ConversationService extends Middleware {
 
 	/**
 	 * 
-	 * @param {Object} type 
+	 * @param {String} type 
 	 */
 	findByType(type) {
 		const endpointPath = CONVERSATIONS + CONVERSATION.findByType + type;
@@ -59,9 +70,28 @@ class ConversationService extends Middleware {
 
 	/**
 	 * 
-	 * @param {Object} filter 
+	 * @param {String} name 
 	 */
-	findAll(filter) {
+	findByName(name) {
+		const endpointPath = CONVERSATIONS + CONVERSATION.findByName + name;
+		return super.get(endpointPath);
+	}
+
+	/**
+	 * 
+	 * @param {String} type 
+	 * @param {[ObjectId]} members 
+	 */
+	findByTypeAndName(type, name) {
+		const endpoint = CONVERSATION.findByTypeAndName.replace(':type', type).replace(':name', name);
+		const endpointPath = CONVERSATIONS + endpoint;
+		return super.get(endpointPath);
+	}
+
+	/**
+	 * 
+	 */
+	findAll() {
 		const endpointPath = CONVERSATIONS + CONVERSATION.findAll;
 		return super.get(endpointPath);
 	}

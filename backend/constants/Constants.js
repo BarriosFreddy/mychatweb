@@ -9,12 +9,13 @@ const PATHS_GENERIC = {
 module.exports = {
 	URL_DATABASE: 'mongodb://fbarrios:fbarrios7@ds121176.mlab.com:21176/heroku_vvf1zl9h',
 	API_PORT: 3000,
-	COMUNICATION_PORT: 4000, 
+	COMUNICATION_PORT: 4000,
 	URI: {
 		HOME: '/',
 		AUTHENTICATION: '/authentication',
 		USERS: '/users',
-		CONVERSATIONS: '/conversations'
+		CONVERSATIONS: '/conversations',
+		FILES: '/files'
 	},
 	RESOURCES: {
 		LOGIN: '/login',
@@ -25,7 +26,14 @@ module.exports = {
 		CONVERSATION: {
 			...PATHS_GENERIC,
 			findByType: '/type/:type',
-			findByTypeAndMember: '/type/:type/member/:member'
+			findByName: '/name/:name',
+			findByTypeAndName: '/type/:type/name/:name',
+			findByTypeAndMembers: '/type/:type/members/:members',
+			findPersonalConversation: '/members/:members'
+		},
+		FILE: {
+			upload: '/',
+			image: '/image/:path',
 		}
 	}
 }
