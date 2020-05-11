@@ -12,6 +12,9 @@ import { MdClose } from "react-icons/md";
 import UserService from '../../../../../services/UserService';
 import FileService from '../../../../../services/FileService';
 
+const userImage = require('../../../../../assets/images/user.png');
+const PREFIX_BASE64 = 'data:image/jpeg;base64,';
+
 export class ProfileComponent extends React.Component {
 
 	constructor(props) {
@@ -25,7 +28,7 @@ export class ProfileComponent extends React.Component {
 		const currentUser = UserService.getCurrentUser();
 		this.state = {
 			currentUser,
-			show: true,
+			show: false,
 			file: null
 		}
 
@@ -33,11 +36,20 @@ export class ProfileComponent extends React.Component {
 		this.fileInput = React.createRef();
 	}
 
+	componentDidMount() {
+		const { imageUrl } = this.state.currentUser;
+		FileService.image(imageUrl).then(response => {
+			if (response.data) {
+				const imageAsBase64 = PREFIX_BASE64 + response.data;
+				this.setState({ file: imageAsBase64 });
+			}
+		}).catch(error => console.error(error));
+	}
 
 	handleUploadImage(e) {
 		const file = e.target.files[0];
 		console.log(e.target);
-		this.setState({ file });
+		this.setState({ file: URL.createObjectURL(file) });
 
 		const formData = new FormData();
 		formData.append('image', file);
@@ -106,8 +118,8 @@ export class ProfileComponent extends React.Component {
 									<Row>
 										<Col md={12}>
 											<Image style={Styles.image} thumbnail
-												src={this.state.file ? this.state.file.path
-													: 'https://picsum.photos/200/300'} roundedCircle />
+												src={this.state.file ? this.state.file
+													: userImage} roundedCircle />
 										</Col>
 									</Row>
 									<br />

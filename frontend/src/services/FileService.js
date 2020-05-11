@@ -13,6 +13,11 @@ class FileService extends Middleware {
 		const endpointPath = FILES + FILE.upload;
 		return super.postFormData(endpointPath, formData);
 	}
+
+	image(url) {
+		const endpointPath = FILES + FILE.image + url;
+		return super.get(endpointPath);
+	}
 }
 
 export default new FileService();

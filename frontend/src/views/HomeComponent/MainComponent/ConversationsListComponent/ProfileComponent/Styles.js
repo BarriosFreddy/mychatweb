@@ -13,7 +13,8 @@ export default {
 		padding: '15px', 
 		background: 'transparent',
 		cursor: 'pointer',
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		borderBottom: '1px solid'
 	},
 	closeSection: {
 		width: '100%',

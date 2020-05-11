@@ -39,6 +39,7 @@ const Constants = {
 		},
 		FILE: {
 			upload: '/',
+			image: '/image/',
 		}
 	}
 }
