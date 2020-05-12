@@ -4,5 +4,6 @@ export default {
 	green: '#49c4a1',
 	orange: '#edb625',
 	red: '#e6186d',
-	voilet: '#5c3a58'
+	voilet: '#5c3a58',
+	gray: '#eeeeff'
 }

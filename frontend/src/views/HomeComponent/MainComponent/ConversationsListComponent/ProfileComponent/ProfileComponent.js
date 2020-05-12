@@ -11,9 +11,23 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { MdClose } from "react-icons/md";
 import UserService from '../../../../../services/UserService';
 import FileService from '../../../../../services/FileService';
+import Constants from '../../../../../constants/Constants';
+import history from './../../../../../history';
+import * as firebase from "firebase";
 
 const userImage = require('../../../../../assets/images/user.png');
 const PREFIX_BASE64 = 'data:image/jpeg;base64,';
+
+const firebaseConfig = {
+	apiKey: "AIzaSyAB_5uta9tzQNwssN6uIEtPsnQgf54N-Bc",
+	authDomain: "mychatweb-15808.firebaseapp.com",
+	databaseURL: "https://mychatweb-15808.firebaseio.com",
+	projectId: "mychatweb-15808",
+	storageBucket: "mychatweb-15808.appspot.com",
+	messagingSenderId: "653032904442",
+	appId: "1:653032904442:web:6a4d1240635977e12a9b43",
+	measurementId: "G-0WHYPW361N"
+};
 
 export class ProfileComponent extends React.Component {
 
@@ -23,7 +37,7 @@ export class ProfileComponent extends React.Component {
 		this.show = this.show.bind(this);
 		this.handleUploadImage = this.handleUploadImage.bind(this);
 		this.onCLickChangeImage = this.onCLickChangeImage.bind(this);
-
+		this.handleCLickLogout = this.handleCLickLogout.bind(this);
 
 		const currentUser = UserService.getCurrentUser();
 		this.state = {
@@ -36,37 +50,48 @@ export class ProfileComponent extends React.Component {
 		this.fileInput = React.createRef();
 	}
 
+
+	componentWillMount() {
+		if (!firebase.apps.length) {
+			firebase.initializeApp(firebaseConfig);
+			firebase.analytics();
+		}
+	}
+
 	componentDidMount() {
+		this.getProfileImage();
+	}
+
+	getProfileImage() {
 		const { imageUrl } = this.state.currentUser;
-		FileService.image(imageUrl).then(response => {
-			if (response.data) {
-				const imageAsBase64 = PREFIX_BASE64 + response.data;
-				this.setState({ file: imageAsBase64 });
-			}
-		}).catch(error => console.error(error));
+		if (imageUrl) {
+			const fileRef = firebase.storage().ref(imageUrl);
+			fileRef.getDownloadURL().then(url => {
+				this.setState({ file: url });
+			}).catch(error => { });
+		}
+	}
+
+	storeFile(fileName, file) {
+		if (fileName && file) {
+			const fileRef = firebase.storage().ref().child(fileName);
+			fileRef.put(file).then((snapshot) => {
+				if (snapshot) {
+					const { currentUser } = this.state;
+					currentUser.imageUrl = fileName;
+					UserService.update(currentUser._id, currentUser).then(response => {
+						console.log(response)
+					}).catch(error => console.log(error));
+				}
+			});
+		}
 	}
 
 	handleUploadImage(e) {
 		const file = e.target.files[0];
-		console.log(e.target);
 		this.setState({ file: URL.createObjectURL(file) });
 
-		const formData = new FormData();
-		formData.append('image', file);
-
-		FileService.upload(formData).then(response => {
-			console.log("Image Uploaded", response);
-			const { data } = response;
-			if (data && data.image) {
-				const { name } = data.image;
-				const { currentUser } = this.state;
-				currentUser.imageUrl = name;
-				UserService.update(currentUser._id, currentUser).then(response => {
-					console.log(response)
-				}).catch(error => console.log(error));
-			}
-		}).catch(error => console.error(error));
-
+		this.storeFile(file.name, file);
 	}
 
 	onCLickChangeImage() {
@@ -81,6 +106,12 @@ export class ProfileComponent extends React.Component {
 
 	show() {
 		this.setState({ show: true });
+	}
+
+	handleCLickLogout() {
+		localStorage.removeItem(Constants.USER_TOKEN);
+		localStorage.removeItem(Constants.CURRENT_USER);
+		history.push("/");
 	}
 
 	render() {
@@ -114,27 +145,22 @@ export class ProfileComponent extends React.Component {
 							</div>
 							<div style={Styles.contentOverlay}>
 								<p>Profile</p>
-								<Container fluid>
-									<Row>
-										<Col md={12}>
-											<Image style={Styles.image} thumbnail
-												src={this.state.file ? this.state.file
-													: userImage} roundedCircle />
-										</Col>
-									</Row>
-									<br />
-									<Row>
-										<Col md={{ span: 11, offset: 1 }}>
-											<input ref={this.fileInput}
-												type="file" name="myImage"
-												style={{ display: 'none' }}
-												onChange={this.handleUploadImage} />
-											<Button variant="light"
-												onClick={this.onCLickChangeImage}>
-												Change image</Button>
-										</Col>
-									</Row>
-								</Container>
+								<Image style={Styles.image} thumbnail
+									src={this.state.file ? this.state.file
+										: userImage} roundedCircle />
+								<input ref={this.fileInput}
+									type="file" name="myImage"
+									style={{ display: 'none' }}
+									onChange={this.handleUploadImage} />
+								<Button variant="light"
+									onClick={this.onCLickChangeImage}>
+									Change image
+									</Button>
+								<br />
+								<Button variant="light"
+									onClick={this.handleCLickLogout}>
+									Log out
+												</Button>
 							</div>
 						</div>
 					)}

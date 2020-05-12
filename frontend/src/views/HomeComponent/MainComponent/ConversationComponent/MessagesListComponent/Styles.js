@@ -3,6 +3,8 @@ export default {
 		height: '78vh',
 		width: '80vw',
 		background: '#fff',
-		overflow: 'auto'
+		overflow: 'auto',
+		display: 'flex',
+		flexDirection: 'column-reverse'
 	}
 }

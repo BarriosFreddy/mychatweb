@@ -32,9 +32,10 @@ export default {
 	contentOverlay: {
 		overflow: 'auto',
 		padding: '10px',
-		minWidth: '30vh',
-		minHeight: '40vh',
-		maxHeight: '40vh',
+		width: '40vh',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center'
 	},
 	image: {
 		width: '100px',

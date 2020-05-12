@@ -14,8 +14,7 @@ module.exports = {
 		HOME: '/',
 		AUTHENTICATION: '/authentication',
 		USERS: '/users',
-		CONVERSATIONS: '/conversations',
-		FILES: '/files'
+		CONVERSATIONS: '/conversations'
 	},
 	RESOURCES: {
 		LOGIN: '/login',
@@ -30,10 +29,6 @@ module.exports = {
 			findByTypeAndName: '/type/:type/name/:name',
 			findByTypeAndMembers: '/type/:type/members/:members',
 			findPersonalConversation: '/members/:members'
-		},
-		FILE: {
-			upload: '/',
-			image: '/image/:path',
 		}
 	}
 }
