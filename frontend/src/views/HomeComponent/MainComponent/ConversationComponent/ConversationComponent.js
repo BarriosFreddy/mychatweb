@@ -43,11 +43,7 @@ export class ConversationComponent extends React.Component {
 			this.socket.on('messages', data => {
 				const { messages } = this.state;
 				const messageInList = messages.filter(message => message._id === data._id);
-				if (messageInList.length === 0) {
-					messages.push(data);
-					this.setState({
-						messages
-					});
+				if (messageInList.length === 0 && data.conversationId === this.state.conversationId) {
 					this.updateCurrentConversation(conversationId);
 				}
 			});
@@ -75,6 +71,7 @@ export class ConversationComponent extends React.Component {
 				if (updatedConversation) {
 					const { messages } = updatedConversation;
 					const lastMessage = messages[messages.length - 1];
+					lastMessage.conversationId = conversationId;
 					this.socket.emit('messages', lastMessage);
 					this.updateCurrentConversation(conversationId);
 				}

@@ -35,7 +35,10 @@ io.on("connection", (socket) => {
 			console.log('User joined');
 		});
 		socket.on('messages', data => {
-			socket.broadcast.to(conversationId).emit('messages', data);
+			if (data) {
+				console.log(data);
+				socket.broadcast.to(conversationId).emit('messages', data);
+			}
 		});
 	});
 

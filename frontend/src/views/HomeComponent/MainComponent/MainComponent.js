@@ -55,7 +55,19 @@ export class MainComponent extends React.Component {
 	}
 
 	handleClickConversation(selectedConversation) {
-		this.setState({ selectedConversation });
+		this.updateCurrentConversation(selectedConversation._id);
+	}
+
+	updateCurrentConversation(conversationId) {
+		ConversationService.findById(conversationId)
+			.then(response => {
+				const conversation = response.data;
+				if (conversation) {
+					this.setState({
+						selectedConversation: conversation,
+					});
+				}
+			}).catch(error => console.error(error));
 	}
 
 	render() {
