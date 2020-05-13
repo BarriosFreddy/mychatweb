@@ -1,10 +1,5 @@
 import Middleware from "./Middleware";
-import Constants from "../constants/Constants";
 import * as firebase from "firebase";
-
-
-const { FILES } = Constants.RESOURCES;
-const { FILE } = Constants.ENDPOINTS;
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAB_5uta9tzQNwssN6uIEtPsnQgf54N-Bc",
