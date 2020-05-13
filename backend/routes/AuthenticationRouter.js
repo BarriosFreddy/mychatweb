@@ -4,6 +4,10 @@ const UserService = require('./../services/UserService');
 
 const { LOGIN } = Constants.RESOURCES;
 
+/**
+ * Login endpoint
+ * Receive an username and a password 
+ */
 router.post(LOGIN, (request, response) => {
 	const { username, password } = request.body;
 	UserService.findByUsername(username).then(userRetrieved => {

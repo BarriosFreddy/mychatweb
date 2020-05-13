@@ -6,7 +6,7 @@ const { USER } = Constants.ENDPOINTS;
 class UserService extends Middleware {
 
 	/**
-	 * 
+	 * Save User
 	 * @param {Object} body 
 	 */
 	save(body) {
@@ -15,7 +15,7 @@ class UserService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * Update User
 	 * @param {Number} id 
 	 * @param {Object} body 
 	 */
@@ -25,7 +25,7 @@ class UserService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * Find a user by id
 	 * @param {Number} id 
 	 */
 	findById(id) {
@@ -34,7 +34,7 @@ class UserService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * Find user by user name
 	 * @param {String} username 
 	 */
 	findByUsername(username) {
@@ -43,16 +43,15 @@ class UserService extends Middleware {
 	}
 
 	/**
-	 * 
-	 * @param {Object} filter 
+	 * List Users
 	 */
-	findAll(filter) {
+	findAll() {
 		const endpointPath = USERS + USER.findAll;
 		return super.get(endpointPath);
 	}
 
 	/**
-	 * 
+	 * Delete a User by id
 	 * @param {Number} id 
 	 */
 	delete(id) {
@@ -60,6 +59,9 @@ class UserService extends Middleware {
 		return super.delete(endpointPath);
 	}
 
+	/**
+	 * Get logged user in
+	 */
 	getCurrentUser() {
 		return JSON.parse(localStorage.getItem(Constants.CURRENT_USER));
 	}

@@ -6,7 +6,7 @@ import UserService from '../../../../../services/UserService';
 
 export class MessagesListComponent extends React.Component {
 	constructor(props) {
-		super()
+		super(props)
 		this.orderMessage = this.orderMessage.bind(this);
 		const currentUser = UserService.getCurrentUser();
 		this.state = {
@@ -27,8 +27,6 @@ export class MessagesListComponent extends React.Component {
 	render() {
 		return (<div style={Styles.container}>
 			{this.orderMessage().map((message, index) => {
-				console.log(message.message.substring(0, 20), new Date(message.createdAt));
-
 				return <MessagesLogComponent key={index}
 					isAuthor={message.author === this.state.currentUser._id}
 					message={message.message} />

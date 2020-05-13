@@ -74,12 +74,12 @@ export class ConversationsListComponent extends React.Component {
 	}
 
 	handleSaveGroup(group) {
-		console.log(group);
 		if (group) {
 			group.type = ConversationType.GROUPAL;
 			group.members.push(this.state.currentUser._id);
 			ConversationService.save(group).then(response => {
 				if (response.data) {
+					this.props.onSavedGroupalConversation(response.data);
 					this.listGroupalsConversations();
 				}
 			}).catch(error => {

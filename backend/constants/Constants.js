@@ -9,7 +9,6 @@ const PATHS_GENERIC = {
 module.exports = {
 	URL_DATABASE: 'mongodb://fbarrios:fbarrios7@ds121176.mlab.com:21176/heroku_vvf1zl9h',
 	API_PORT: 3000,
-	COMUNICATION_PORT: 4000,
 	URI: {
 		HOME: '/',
 		AUTHENTICATION: '/authentication',

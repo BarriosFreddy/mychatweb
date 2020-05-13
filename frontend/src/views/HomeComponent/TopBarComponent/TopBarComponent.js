@@ -1,6 +1,5 @@
 import React from 'react';
 import Styles from './Styles';
-import './top-bar-component.style.css';
 
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
@@ -19,12 +18,12 @@ import ConversationType from '../../../constants/ConversationType';
 
 export class TopBarComponent extends React.Component {
 	constructor(props) {
-		super()
+		super(props)
 		this.resolveUsersResults = this.resolveUsersResults.bind(this);
 		this.resolveGroupsResults = this.resolveGroupsResults.bind(this);
 		this.handleChangeSearch = this.handleChangeSearch.bind(this);
 		this.handleClickSearch = this.handleClickSearch.bind(this);
-		this.handleClickUser = this.handleClickUser.bind(this);
+		this.handleClickRecord = this.handleClickRecord.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 
 		const currentUser = UserService.getCurrentUser();
@@ -36,9 +35,6 @@ export class TopBarComponent extends React.Component {
 			show: false,
 		}
 		this.target = React.createRef();
-	}
-
-	componentWillMount() {
 	}
 
 	handleChangeSearch(event) {
@@ -56,7 +52,6 @@ export class TopBarComponent extends React.Component {
 			this.listUsers();
 			this.listGroups();
 		}
-
 	}
 
 	findByUsername = (search) => UserService.findByUsername(search)
@@ -84,8 +79,8 @@ export class TopBarComponent extends React.Component {
 		console.log(error);
 	}
 
-	handleClickUser(user) {
-		this.setState({ show: false });
+	handleClickRecord(user) {
+		this.setState({ show: false, search: '' });
 		this.props.onClickSearch(user);
 	}
 
@@ -127,7 +122,7 @@ export class TopBarComponent extends React.Component {
 											{this.state.usersList.map(user =>
 												<ListGroup.Item key={user._id}
 													style={Styles.item}
-													onClick={() => this.handleClickUser(user)}
+													onClick={() => this.handleClickRecord(user)}
 												>{user.username}</ListGroup.Item>
 											)}
 										</ListGroup>
@@ -140,7 +135,7 @@ export class TopBarComponent extends React.Component {
 											{this.state.groupsList.map(group =>
 												<ListGroup.Item key={group._id}
 													style={Styles.item}
-													onClick={() => this.handleClickUser(group)}
+													onClick={() => this.handleClickRecord(group)}
 												>{group.name}</ListGroup.Item>
 											)}
 										</ListGroup>
@@ -156,6 +151,7 @@ export class TopBarComponent extends React.Component {
 						style={Styles.searchInput}
 						value={this.state.search}
 						onChange={this.handleChangeSearch}
+						onFocus={this.handleChangeSearch}
 					/>
 					<InputGroup.Append>
 						<Button variant="light"

@@ -5,6 +5,11 @@ export default {
 		background: '#fff',
 		display: 'flex',
 		flexDirection: 'column',
-/* 		alignItems: '' */
+	},
+	welcome: {
+		alignSelf: 'center',
+		fontWeight: 'bold',
+		fontSize: '40px',
+		marginTop: '10vh'
 	}
 }

@@ -5,12 +5,11 @@ import { MainComponent } from './MainComponent/MainComponent';
 
 export class HomeComponent extends React.Component {
 	constructor(props) {
-		super()
+		super(props)
 		this.onClickSearch = this.onClickSearch.bind(this);
 		this.state = {
 			selectedConversation: null
 		}
-
 	}
 
 	onClickSearch(selectedConversation) {

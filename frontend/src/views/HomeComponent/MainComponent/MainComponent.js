@@ -18,9 +18,6 @@ export class MainComponent extends React.Component {
 		}
 	}
 
-	componentWillMount() {
-	}
-
 	componentWillReceiveProps(props) {
 		if (props.selectedConversation) {
 			const { selectedConversation } = props;
@@ -54,22 +51,19 @@ export class MainComponent extends React.Component {
 			}).catch(error => {
 				console.log(error);
 			});
-
-
 		}
-
 	}
 
 	handleClickConversation(selectedConversation) {
 		this.setState({ selectedConversation });
 	}
 
-
 	render() {
 		return (<div style={Styles.container}>
 			<ConversationsListComponent
 				selectedConversation={this.state.selectedConversation}
-				onClickConversation={this.handleClickConversation}></ConversationsListComponent>
+				onClickConversation={this.handleClickConversation}
+				onSavedGroupalConversation={this.handleClickConversation}/>
 			<ConversationComponent selectedConversation={this.state.selectedConversation} ></ConversationComponent>
 		</div>)
 	}

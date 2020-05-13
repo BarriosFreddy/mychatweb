@@ -9,17 +9,17 @@ import Constants from './../../constants/Constants';
 
 export class LoginComponent extends React.Component {
 	constructor(props) {
-		super()
+		super(props)
+		this.handleChangeUsername = this.handleChangeUsername.bind(this);
+		this.handleChangePassword = this.handleChangePassword.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		
 		this.state = {
 			username: '',
 			password: '',
 			loginFailed: false,
 			disable: false
 		};
-
-		this.handleChangeUsername = this.handleChangeUsername.bind(this);
-		this.handleChangePassword = this.handleChangePassword.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChangeUsername(event) {

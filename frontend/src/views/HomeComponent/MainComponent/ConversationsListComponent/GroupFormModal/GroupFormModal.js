@@ -31,9 +31,6 @@ export class GroupFormModal extends React.Component {
 		this.listUsersSearch();
 	}
 
-	componentDidUpdate() {
-	}
-
 	handleChangeGroupname(event) {
 		this.setState({ groupname: event.target.value });
 	}

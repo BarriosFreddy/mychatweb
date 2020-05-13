@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId;
 
+/**
+ * Create a conversation schema
+ */
 const conversationSchema = new Schema({
 	name: { type: String },
 	type: { type: String },
@@ -18,4 +21,5 @@ const conversationSchema = new Schema({
 	updatedAt: { type: Date, default: Date.now },
 });
 
+// Create and export Conversation model
 module.exports = mongoose.model('Conversation', conversationSchema);

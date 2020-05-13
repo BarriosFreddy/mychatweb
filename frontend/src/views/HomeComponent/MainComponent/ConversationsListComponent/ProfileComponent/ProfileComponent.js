@@ -3,9 +3,6 @@ import Styles from './Styles';
 
 import Overlay from 'react-bootstrap/Overlay';
 import Image from 'react-bootstrap/Image';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { MdClose } from "react-icons/md";
@@ -13,21 +10,9 @@ import UserService from '../../../../../services/UserService';
 import FileService from '../../../../../services/FileService';
 import Constants from '../../../../../constants/Constants';
 import history from './../../../../../history';
-import * as firebase from "firebase";
 
 const userImage = require('../../../../../assets/images/user.png');
-const PREFIX_BASE64 = 'data:image/jpeg;base64,';
 
-const firebaseConfig = {
-	apiKey: "AIzaSyAB_5uta9tzQNwssN6uIEtPsnQgf54N-Bc",
-	authDomain: "mychatweb-15808.firebaseapp.com",
-	databaseURL: "https://mychatweb-15808.firebaseio.com",
-	projectId: "mychatweb-15808",
-	storageBucket: "mychatweb-15808.appspot.com",
-	messagingSenderId: "653032904442",
-	appId: "1:653032904442:web:6a4d1240635977e12a9b43",
-	measurementId: "G-0WHYPW361N"
-};
 
 export class ProfileComponent extends React.Component {
 
@@ -50,14 +35,6 @@ export class ProfileComponent extends React.Component {
 		this.fileInput = React.createRef();
 	}
 
-
-	componentWillMount() {
-		if (!firebase.apps.length) {
-			firebase.initializeApp(firebaseConfig);
-			firebase.analytics();
-		}
-	}
-
 	componentDidMount() {
 		this.getProfileImage();
 	}
@@ -65,8 +42,7 @@ export class ProfileComponent extends React.Component {
 	getProfileImage() {
 		const { imageUrl } = this.state.currentUser;
 		if (imageUrl) {
-			const fileRef = firebase.storage().ref(imageUrl);
-			fileRef.getDownloadURL().then(url => {
+			FileService.getFileURL(imageUrl).then(url => {
 				this.setState({ file: url });
 			}).catch(error => { });
 		}
@@ -74,12 +50,14 @@ export class ProfileComponent extends React.Component {
 
 	storeFile(fileName, file) {
 		if (fileName && file) {
-			const fileRef = firebase.storage().ref().child(fileName);
-			fileRef.put(file).then((snapshot) => {
+			FileService.upload(fileName, file).then((snapshot) => {
 				if (snapshot) {
 					const { currentUser } = this.state;
 					currentUser.imageUrl = fileName;
 					UserService.update(currentUser._id, currentUser).then(response => {
+						if (response.data) {
+							localStorage.setItem(Constants.CURRENT_USER, JSON.stringify(response.data));
+						}
 						console.log(response)
 					}).catch(error => console.log(error));
 				}
@@ -90,14 +68,11 @@ export class ProfileComponent extends React.Component {
 	handleUploadImage(e) {
 		const file = e.target.files[0];
 		this.setState({ file: URL.createObjectURL(file) });
-
 		this.storeFile(file.name, file);
 	}
 
 	onCLickChangeImage() {
 		this.fileInput.current.click()
-		console.log(this.fileInput)
-
 	}
 
 	close() {

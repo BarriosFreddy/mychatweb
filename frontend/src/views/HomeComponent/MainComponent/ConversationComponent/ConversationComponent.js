@@ -54,11 +54,11 @@ export class ConversationComponent extends React.Component {
 		}
 	}
 
-	
+
 	sendMessage(message) {
 		if (this.state.selectedConversation && message) {
 			const { selectedConversation, conversationId } = this.state;
-			
+
 			const messageToSave = {
 				author: this.state.currentUser._id,
 				message,
@@ -67,7 +67,7 @@ export class ConversationComponent extends React.Component {
 			this.saveMessage(conversationId, selectedConversation);
 		}
 	}
-	
+
 	saveMessage(conversationId, conversation) {
 		ConversationService.update(conversationId, conversation)
 			.then(response => {
@@ -79,13 +79,12 @@ export class ConversationComponent extends React.Component {
 					this.updateCurrentConversation(conversationId);
 				}
 			}).catch(error => console.error(error));
-		}
-		
-		updateCurrentConversation(conversationId) {
-			ConversationService.findById(conversationId)
+	}
+
+	updateCurrentConversation(conversationId) {
+		ConversationService.findById(conversationId)
 			.then(response => {
 				const conversation = response.data;
-				console.log(conversation);
 				if (conversation) {
 					this.setState({
 						selectedConversation: conversation,
@@ -93,10 +92,11 @@ export class ConversationComponent extends React.Component {
 					});
 				}
 			}).catch(error => console.error(error));
-		}
+	}
 
-		render() {
-			return (<div style={Styles.container}>
+	render() {
+		return (<div style={Styles.container}>
+			{!this.props.selectedConversation && <div style={Styles.welcome}>Welcome, {this.state.currentUser.username}</div>}
 			{this.props.selectedConversation &&
 				<div>
 					<ConversationHeaderComponent selectedConversation={this.props.selectedConversation}></ConversationHeaderComponent>

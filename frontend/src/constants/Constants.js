@@ -20,8 +20,7 @@ const Constants = {
 	RESOURCES: {
 		AUTHENTICATION: '/authentication',
 		USERS: '/users',
-		CONVERSATIONS: '/conversations',
-		FILES: '/files'
+		CONVERSATIONS: '/conversations'
 	},
 	ENDPOINTS: {
 		LOGIN: '/login',
@@ -36,10 +35,6 @@ const Constants = {
 			findByTypeAndMembers: '/type/:type/members/:members',
 			findByTypeAndName: '/type/:type/name/:name',
 			findPersonalConversation: '/members/:members'
-		},
-		FILE: {
-			upload: '/',
-			image: '/image/',
 		}
 	}
 }

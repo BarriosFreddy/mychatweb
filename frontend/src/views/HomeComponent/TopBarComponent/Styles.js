@@ -18,7 +18,9 @@ export default {
 	},
 	logo: {
 		color: Colors.white,
-		lineHeight: 2
+		lineHeight: 2,
+		margin: '5px 0 0 20px',
+		fontWeight: 'bold'
 	},
 	search: {
 		width: '40vw',

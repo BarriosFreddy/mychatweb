@@ -10,7 +10,7 @@ const { CONVERSATION } = Constants.ENDPOINTS;
 class ConversationService extends Middleware {
 
 	/**
-	 * 
+	 * Save a Conversation
 	 * @param {Object} body 
 	 */
 	save(body) {
@@ -19,7 +19,9 @@ class ConversationService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * 	/**
+	 * Update a Conversation
+	 * @param {Number} id 
 	 * @param {Object} body 
 	 */
 	update(id, body) {
@@ -28,7 +30,7 @@ class ConversationService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * Find a Conversation by id
 	 * @param {Number} id 
 	 */
 	findById(id) {
@@ -37,7 +39,7 @@ class ConversationService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * List Conversations by type and list of members(Users)
 	 * @param {String} type 
 	 * @param {[ObjectId]} members 
 	 */
@@ -48,7 +50,7 @@ class ConversationService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * List Conversations by members array
 	 * @param {String} type 
 	 * @param {[ObjectId]} members 
 	 */
@@ -60,7 +62,7 @@ class ConversationService extends Middleware {
 
 
 	/**
-	 * 
+	 * List Conversations by type
 	 * @param {String} type 
 	 */
 	findByType(type) {
@@ -69,7 +71,7 @@ class ConversationService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * Find a Conversation by name
 	 * @param {String} name 
 	 */
 	findByName(name) {
@@ -78,7 +80,7 @@ class ConversationService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * List Conversations by type and name
 	 * @param {String} type 
 	 * @param {[ObjectId]} members 
 	 */
@@ -89,7 +91,7 @@ class ConversationService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * List Conversations
 	 */
 	findAll() {
 		const endpointPath = CONVERSATIONS + CONVERSATION.findAll;
@@ -97,7 +99,7 @@ class ConversationService extends Middleware {
 	}
 
 	/**
-	 * 
+	 * Delete a Conversation by id
 	 * @param {Number} id 
 	 */
 	delete(id) {

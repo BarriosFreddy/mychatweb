@@ -4,7 +4,7 @@ class UserService {
 	constructor() { }
 
 	/**
-	 * 
+	 * Save User
 	 * @param {Object} user 
 	 */
 	save(user) {
@@ -13,7 +13,7 @@ class UserService {
 	}
 
 	/**
-	 * 
+	 * Update User
 	 * @param {Number} id 
 	 * @param {Object} user 
 	 */
@@ -32,18 +32,14 @@ class UserService {
 	}
 
 	/**
-	 * 
-	 * @param {Object} filter 
+	 * List Users
 	 */
-	findAll(filter) {
-		if (filter) {
-			return User.find(filter);
-		}
+	findAll() {
 		return User.find();
 	}
 
 	/**
-	 * 
+	 * Find a user by id
 	 * @param {Number} id 
 	 */
 	findById(id) {
@@ -51,7 +47,7 @@ class UserService {
 	}
 
 	/**
-	 * 
+	 * Find users by user name ignoring case
 	 * @param {String} username 
 	 */
 	findByUsernameInsensitive(username) {
@@ -59,15 +55,15 @@ class UserService {
 	}
 
 	/**
- * 
- * @param {String} username 
- */
+	 * Find user by user name
+	 * @param {String} username 
+	 */
 	findByUsername(username) {
 		return User.findOne({ username });
 	}
 
 	/**
-	 * 
+	 * Delete a User by id
 	 * @param {Number} id 
 	 */
 	async delete(id) {

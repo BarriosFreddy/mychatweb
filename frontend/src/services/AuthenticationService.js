@@ -7,7 +7,7 @@ const { LOGIN } = Constants.ENDPOINTS;
 class AuthenticationService extends Middleware {
 
 	/**
-	 * 
+	 * Log in a user
 	 * @param {Object} body 
 	 */
 	login(body) {
