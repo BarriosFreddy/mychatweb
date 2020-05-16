@@ -15,6 +15,7 @@ export class GroupFormModal extends React.Component {
 		this.handleClickUserSearch = this.handleClickUserSearch.bind(this);
 		this.handleChangeSearch = this.handleChangeSearch.bind(this);
 		this.resolveResults = this.resolveResults.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 		this.getGroupData = this.getGroupData.bind(this);
 
 		const currentUser = UserService.getCurrentUser();
@@ -24,6 +25,8 @@ export class GroupFormModal extends React.Component {
 			usersListSearch: [],
 			selectedUsersList: [],
 			currentUser,
+			nameValid: true,
+			userslistValid: true
 		}
 	}
 
@@ -90,6 +93,24 @@ export class GroupFormModal extends React.Component {
 		console.log(error);
 	}
 
+	handleSubmit() {
+		if (this.isFormValid()) {
+			this.props.save(this.getGroupData())
+		}
+	}
+
+	isFormValid() {
+		const { groupname, selectedUsersList } = this.state;
+		const nameValid = groupname && groupname.length > 0;
+		const usersListValid = selectedUsersList && selectedUsersList.length > 0;
+		this.setState({
+			nameValid,
+			usersListValid
+		});
+
+		return nameValid && usersListValid;
+	}
+
 	getGroupData() {
 		return {
 			name: this.state.groupname,
@@ -107,14 +128,21 @@ export class GroupFormModal extends React.Component {
 				</Modal.Header>
 				<Modal.Body>
 					<Form.Control type="text" placeholder="Name"
+						required
 						size="sm"
 						value={this.state.groupname}
 						onChange={this.handleChangeGroupname} />
+					{!this.state.nameValid && <div style={Styles.invalid}>
+						Name is required
+            		</div>}
 					<p style={{ fontWeight: 'bold' }}>Selected users</p>
 					<ul>
 						{this.state.selectedUsersList &&
 							this.state.selectedUsersList.map(user => <li key={user._id}>{user.username}</li>)}
 					</ul>
+					{!this.state.nameValid && <div style={Styles.invalid}>
+						Add at least one user
+            		</div>}
 					<Form.Group controlId="formHorizontalUsername">
 						<Form.Label>Suggested users</Form.Label>
 						<Form.Control
@@ -141,7 +169,7 @@ export class GroupFormModal extends React.Component {
 					</ListGroup>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button variant="primary" onClick={() => this.props.save(this.getGroupData())}>
+					<Button variant="primary" onClick={this.handleSubmit}>
 						Save
           				</Button>
 				</Modal.Footer>

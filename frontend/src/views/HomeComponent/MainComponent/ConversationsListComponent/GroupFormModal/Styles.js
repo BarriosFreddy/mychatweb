@@ -44,4 +44,8 @@ export default {
 		marginTop: '-5px',
 		color: Colors.white
 	},
+	invalid: {
+		color: Colors.red,
+		fontSize: 12
+	}
 }

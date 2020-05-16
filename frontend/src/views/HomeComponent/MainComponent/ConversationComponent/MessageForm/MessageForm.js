@@ -31,8 +31,10 @@ export class MessageFormComponent extends React.Component {
 	}
 
 	sendMessage() {
-		this.props.sendMessage(this.state.message);
-		this.setState({ message: '' })
+		if (this.state.message && this.state.message.length > 0) {
+			this.props.sendMessage(this.state.message);
+			this.setState({ message: '' })
+		}
 	}
 
 	render() {

@@ -44,7 +44,7 @@ export class ConversationComponent extends React.Component {
 				const { messages } = this.state;
 				const messageInList = messages.filter(message => message._id === data._id);
 				if (messageInList.length === 0 && data.conversationId === this.state.conversationId) {
-					this.updateCurrentConversation(conversationId);
+					this.updateCurrentConversation();
 				}
 			});
 		}
@@ -53,33 +53,33 @@ export class ConversationComponent extends React.Component {
 
 	sendMessage(message) {
 		if (this.state.selectedConversation && message) {
-			const { selectedConversation, conversationId } = this.state;
+			const { selectedConversation } = this.state;
 
 			const messageToSave = {
 				author: this.state.currentUser._id,
 				message,
 			}
 			selectedConversation.messages.push(messageToSave);
-			this.saveMessage(conversationId, selectedConversation);
+			this.saveMessage(selectedConversation);
 		}
 	}
 
-	saveMessage(conversationId, conversation) {
-		ConversationService.update(conversationId, conversation)
+	saveMessage(conversation) {
+		ConversationService.update(this.state.conversationId, conversation)
 			.then(response => {
 				const updatedConversation = response.data;
 				if (updatedConversation) {
 					const { messages } = updatedConversation;
 					const lastMessage = messages[messages.length - 1];
-					lastMessage.conversationId = conversationId;
+					lastMessage.conversationId = this.state.conversationId;
 					this.socket.emit('messages', lastMessage);
-					this.updateCurrentConversation(conversationId);
+					this.updateCurrentConversation();
 				}
 			}).catch(error => console.error(error));
 	}
 
-	updateCurrentConversation(conversationId) {
-		ConversationService.findById(conversationId)
+	updateCurrentConversation() {
+		ConversationService.findById(this.state.conversationId)
 			.then(response => {
 				const conversation = response.data;
 				if (conversation) {
