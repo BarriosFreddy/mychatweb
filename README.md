@@ -52,16 +52,6 @@ To deploy project
     $ yarn start
 
 ### Frontend
-To consumes the API locally is necessary change a constant of the project, in the Constants file which is located in frontend/src/constants/Constants.js, as It's shown below.
-
-This
-
-![Change constant](https://github.com/BarriosFreddy/mychatweb/blob/master/images/change_constant1.PNG)
-
-To this
-
-![Change constant](https://github.com/BarriosFreddy/mychatweb/blob/master/images/change_constant2.PNG)
-
 
 To run the backend of the project, It is mandatory  to execute the following commands in the root folder.
 
